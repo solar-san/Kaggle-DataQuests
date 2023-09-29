@@ -1,0 +1,173 @@
+---
+title: "Machine_Learning_from_Disaster_with_R"
+author: "Marco Solari"
+date: "2023-09-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE
+  )
+
+library(tidyverse)
+library(glmnet)
+library(ggthemes)
+
+theme_set(
+  theme_tufte(
+    base_size = 12,
+    base_family = 'Atkinson Hyperlegible'
+    )
+  )
+```
+
+# Loading data
+
+```{r data loader}
+data_loader <- function(filename, dataset, path = "data/") {
+  
+  path <- paste0(path, filename)
+
+  read.csv(
+    unz(
+      path,
+      dataset
+    )
+  ) 
+
+}
+```
+
+```{r}
+train_data <- data_loader(
+  "titanic.zip",
+  "train.csv"
+)
+test_data <- data_loader(
+  "titanic.zip",
+  "test.csv"
+)
+```
+
+```{r}
+train_data %>% str
+```
+
+```{r}
+factorize_data <- function(dataframe) {
+  dataframe %>% 
+  select(-Name, -Ticket) %>% 
+  mutate(
+    Pclass = as.factor(Pclass),
+    Sex = as.factor(Sex),
+    SibSp = as.factor(SibSp),
+    Parch = as.factor(Parch),
+    Cabin = as.factor(Cabin),
+    Embarked = as.factor(Embarked)
+  )
+}
+```
+
+```{r}
+train_data_factorized <- factorize_data(dataframe = train_data) 
+test_data_factorized <- factorize_data(dataframe = test_data)
+```
+
+```{r}
+train_data_factorized %>% summary
+```
+```{r, eval=FALSE}
+list(
+  "train_data_NA" = train_data_factorized %>% 
+    is.na() %>% 
+    sum,
+  "test_data_NA" = test_data_factorized %>% 
+    is.na() %>% 
+    sum
+)
+```
+
+```{r, eval=FALSE}
+train_data_factorized <- train_data_factorized %>% 
+ na.omit()
+test_data_factorized <- test_data_factorized %>% 
+ na.omit()
+```
+
+```{r}
+fit_full <- glm(
+  Survived ~ ., 
+  data = train_data_factorized, 
+  family = "binomial"
+)
+```
+
+```{r}
+fit_full %>% summary
+```
+
+```{r}
+fit_null <- glm(
+  Survived ~ 1, 
+  data = train_data_factorized, 
+  family = "binomial"
+)
+```
+
+```{r}
+sel_stepwise <- step(
+  fit_full,
+  scope = c(fit_null, fit_full),
+  direction = "both",
+  k = log(dim(train_data_factorized)[1])
+)
+```
+
+```{r}
+sel_stepwise
+```
+
+```{r}
+predictions <- 
+  ifelse(
+  predict(
+    sel_stepwise,
+    newdata = test_data_factorized,
+    type = "response"
+  ) > .5,
+  1,
+  0
+)
+```
+
+
+```{r}
+submission <- data.frame(
+  PassengerId = test_data %>%
+    select(PassengerId),
+  Survived = predictions
+)
+```
+
+
+```{r}
+write.csv(
+  submission,
+  "data/submission.csv",
+  row.names = FALSE
+)
+```
+
+# Submission result:
+
+> ___Score___: 0.61244
+
+This result is awful: as expected, the _logistic regression_ is highly interpretable but suffers from high bias and therefore has low prediction capabilities.
+
+The interesting result regards the _coefficients_ of the selected model:
+
+```{r}
+sel_stepwise %>% coefficients()
+```
+
