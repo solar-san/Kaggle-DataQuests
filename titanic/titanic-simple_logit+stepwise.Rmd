@@ -54,6 +54,8 @@ test_data <- data_loader(
 train_data %>% str
 ```
 
+# Data transformation: `as.factor`
+
 ```{r}
 factorize_data <- function(dataframe) {
   dataframe %>% 
@@ -95,6 +97,8 @@ test_data_factorized <- test_data_factorized %>%
  na.omit()
 ```
 
+# Model selection: Logistic Regression + Stepwise Selection
+
 ```{r}
 fit_full <- glm(
   Survived ~ ., 
@@ -120,13 +124,17 @@ sel_stepwise <- step(
   fit_full,
   scope = c(fit_null, fit_full),
   direction = "both",
-  k = log(dim(train_data_factorized)[1])
+  k = log(
+    dim(train_data_factorized)[1]
+    )
 )
 ```
 
 ```{r}
 sel_stepwise
 ```
+
+# Make Predictions and Submission `csv`
 
 ```{r}
 predictions <- 
@@ -171,3 +179,14 @@ The interesting result regards the _coefficients_ of the selected model:
 sel_stepwise %>% coefficients()
 ```
 
+```{r}
+convert_to_prob <- function(logit) {
+  exp(logit)/(1+exp(logit))
+}
+```
+
+```{r}
+sel_stepwise %>% coefficients() %>%  convert_to_prob()
+```
+
+All else equal, these converted coefficients show the probability of survival associated to class, gender == male and age.
