@@ -50,8 +50,26 @@ test_data <- data_loader(
 )
 ```
 
+# Data Exploration
+
 ```{r}
 train_data %>% str
+```
+```{r}
+test_data %>% str
+```
+
+> In the test data we do not have the dependent variable (and how the f***k am I supposed to evaluate my model? Why Kaggle, why?)
+
+We need to find a way around this:
+
+```{r}
+N_train_obs <- dim(train_data)[1]
+
+train_idx <- sample(
+  N_train_obs,
+  N_train_obs*.5
+)
 ```
 
 # Data transformation: `as.factor`
@@ -103,7 +121,8 @@ test_data_factorized <- test_data_factorized %>%
 fit_full <- glm(
   Survived ~ ., 
   data = train_data_factorized, 
-  family = "binomial"
+  family = "binomial",
+  subset = train_idx
 )
 ```
 
@@ -115,7 +134,8 @@ fit_full %>% summary
 fit_null <- glm(
   Survived ~ 1, 
   data = train_data_factorized, 
-  family = "binomial"
+  family = "binomial",
+  subset = train_idx
 )
 ```
 
@@ -131,7 +151,11 @@ sel_stepwise <- step(
 ```
 
 ```{r}
-sel_stepwise
+sel_stepwise <- update(
+  sel_stepwise,
+  formula = Survived ~ Pclass*Sex*Age
+)
+sel_stepwise %>% summary()
 ```
 
 # Make Predictions and Submission `csv`
@@ -141,9 +165,32 @@ predictions <-
   ifelse(
   predict(
     sel_stepwise,
+    newdata = train_data_factorized[-train_idx, ],
+    type = "response"
+  ) > 0.7,
+  1,
+  0
+)
+```
+
+```{r}
+pROC::roc(
+  train_data_factorized[-train_idx, ]$Survived,
+  predictions,
+)
+```
+
+```{r}
+mean(predictions == train_data_factorized[-train_idx, ]$Survived, na.rm = TRUE )
+```
+
+```{r}
+predictions_test <- ifelse(
+  predict(
+    sel_stepwise,
     newdata = test_data_factorized,
     type = "response"
-  ) > .5,
+  ) > 0.75,
   1,
   0
 )
@@ -154,7 +201,7 @@ predictions <-
 submission <- data.frame(
   PassengerId = test_data %>%
     select(PassengerId),
-  Survived = predictions
+  Survived = predictions_test
 )
 ```
 
@@ -169,11 +216,18 @@ write.csv(
 
 # Submission result:
 
-> ___Score___: 0.61244
+> ___Score___: 0.622
 
 This result is awful: as expected, the _logistic regression_ is highly interpretable but suffers from high bias and therefore has low prediction capabilities.
 
 The interesting result regards the _coefficients_ of the selected model:
+
+```{r}
+# sel_stepwise <- update(
+#   sel_stepwise,
+#   data = train_data %>% factorize_data()
+#   ) %>% summary 
+```
 
 ```{r}
 sel_stepwise %>% coefficients()
