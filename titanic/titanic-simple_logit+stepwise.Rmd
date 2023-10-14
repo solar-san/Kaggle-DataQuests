@@ -167,7 +167,7 @@ predictions <-
     sel_stepwise,
     newdata = train_data_factorized[-train_idx, ],
     type = "response"
-  ) > 0.7,
+  ) > 0.35,
   1,
   0
 )
@@ -177,6 +177,15 @@ predictions <-
 pROC::roc(
   train_data_factorized[-train_idx, ]$Survived,
   predictions,
+)
+```
+
+```{r}
+plot(
+  pROC::roc(
+  train_data_factorized[-train_idx, ]$Survived,
+  predictions,
+  )
 )
 ```
 
