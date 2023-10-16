@@ -1,5 +1,6 @@
 ---
 title: "Machine_Learning_from_Disaster_with_R"
+subtitle: "Logit Approach"
 author: "Marco Solari"
 date: "2023-09-28"
 output: html_document
@@ -16,7 +17,10 @@ requirements <- c(
   "ggthemes"
 )
 
-lapply(requirements, library, character.only = T)
+lapply(
+  requirements, 
+  library, 
+  character.only = T)
 
 theme_set(
   theme_tufte(
