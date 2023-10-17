@@ -36,7 +36,6 @@ theme_set(
 data_loader <- function(filename, dataset, path = "data/") {
   
   path <- paste0(path, filename)
-
   read.csv(
     unz(
       path,
@@ -65,6 +64,25 @@ train_data %>% str
 ```
 ```{r}
 test_data %>% str
+```
+
+Some variables might benefit from scaling: `Fare` and `Age`.
+
+```{r}
+train_data <- train_data %>% 
+  mutate(
+    Age = scale(Age),
+    Fare = scale(Fare)
+  )
+test_data <- test_data %>% 
+  mutate(
+    Age = scale(Age),
+    Fare = scale(Fare)
+  )
+```
+
+```{r}
+train_data %>% summary
 ```
 
 > In the test data we do not have the dependent variable. Therefore, we need to split the dataset and use cross-validation to estimate the error.
@@ -103,6 +121,7 @@ test_data_factorized <- factorize_data(dataframe = test_data)
 ```{r}
 train_data_factorized %>% summary
 ```
+
 ```{r, eval=FALSE}
 list(
   "train_data_NA" = train_data_factorized %>% 
@@ -118,7 +137,7 @@ There are plenty of `NA`s values; however, if we were to remove them now, we wou
 
 To improve the performance of the model, we could use a clustering approach to find robust replacement values for `NA`s.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 train_data_factorized <- train_data_factorized %>% 
  na.omit()
 test_data_factorized <- test_data_factorized %>% 
@@ -132,6 +151,7 @@ fit_full <- glm(
   Survived ~ ., 
   data = train_data_factorized, 
   family = "binomial",
+  na.action = na.omit,
   subset = train_idx
 )
 ```
@@ -145,6 +165,7 @@ fit_null <- glm(
   Survived ~ 1, 
   data = train_data_factorized, 
   family = "binomial",
+  na.action = na.omit,
   subset = train_idx
 )
 ```
@@ -158,6 +179,11 @@ sel_stepwise <- step(
     dim(train_data_factorized)[1]
     )
 )
+```
+
+
+```{r}
+sel_stepwise %>% summary()
 ```
 
 ```{r}
@@ -177,7 +203,7 @@ predictions <-
     sel_stepwise,
     newdata = train_data_factorized[-train_idx, ],
     type = "response"
-  ) > 0.766,
+  ) > 0.7293,
   1,
   0
 )
@@ -209,7 +235,7 @@ predictions_test <- ifelse(
     sel_stepwise,
     newdata = test_data_factorized,
     type = "response"
-  ) > 0.75,
+  ) > 0.7293,
   1,
   0
 )
@@ -217,11 +243,15 @@ predictions_test <- ifelse(
 
 
 ```{r}
-submission <- merge(
-  x = test_data %>%
+submission <- data.frame(
+  PassengerId = test_data %>%
     select(PassengerId),
-  y = predictions_test
+  Survived = predictions_test
 )
+```
+
+```{r}
+submission
 ```
 
 
@@ -235,22 +265,9 @@ write.csv(
 
 # Submission result:
 
-> ___Score___: 0.622
+> ___Score___: 0.62244
 
 This result is awful: as expected, the _logistic regression_ is highly interpretable but suffers from high bias and therefore has low prediction capabilities.
-
-The interesting result regards the _coefficients_ of the selected model:
-
-```{r}
-# sel_stepwise <- update(
-#   sel_stepwise,
-#   data = train_data %>% factorize_data()
-#   ) %>% summary 
-```
-
-```{r}
-sel_stepwise %>% coefficients()
-```
 
 ```{r}
 convert_to_prob <- function(logit) {
@@ -258,8 +275,8 @@ convert_to_prob <- function(logit) {
 }
 ```
 
+
 ```{r}
-sel_stepwise %>% coefficients() %>%  convert_to_prob()
+sel_stepwise %>% coef() %>% convert_to_prob()
 ```
 
-All else equal, these converted coefficients show the probability of survival associated to class, gender == male and age.
