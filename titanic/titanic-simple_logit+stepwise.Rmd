@@ -67,9 +67,7 @@ train_data %>% str
 test_data %>% str
 ```
 
-> In the test data we do not have the dependent variable (and how the f***k am I supposed to evaluate my model? Why Kaggle, why?)
-
-We need to find a way around this:
+> In the test data we do not have the dependent variable. Therefore, we need to split the dataset and use cross-validation to estimate the error.
 
 ```{r}
 N_train_obs <- dim(train_data)[1]
@@ -116,7 +114,11 @@ list(
 )
 ```
 
-```{r, eval=FALSE}
+There are plenty of `NA`s values; however, if we were to remove them now, we would end up with a different number of dimensions compared to the test-set. Because we have (at the moment) viable replacement values, we will use a `merge` to solve this and proceed removing the `NA`.
+
+To improve the performance of the model, we could use a clustering approach to find robust replacement values for `NA`s.
+
+```{r, eval=TRUE}
 train_data_factorized <- train_data_factorized %>% 
  na.omit()
 test_data_factorized <- test_data_factorized %>% 
@@ -175,7 +177,7 @@ predictions <-
     sel_stepwise,
     newdata = train_data_factorized[-train_idx, ],
     type = "response"
-  ) > 0.35,
+  ) > 0.766,
   1,
   0
 )
@@ -215,10 +217,10 @@ predictions_test <- ifelse(
 
 
 ```{r}
-submission <- data.frame(
-  PassengerId = test_data %>%
+submission <- merge(
+  x = test_data %>%
     select(PassengerId),
-  Survived = predictions_test
+  y = predictions_test
 )
 ```
 
