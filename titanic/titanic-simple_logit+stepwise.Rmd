@@ -265,7 +265,7 @@ write.csv(
 
 # Submission result:
 
-> ___Score___: 0.62244
+> ___Score___: 0.6244
 
 This result is awful: as expected, the _logistic regression_ is highly interpretable but suffers from high bias and therefore has low prediction capabilities.
 
