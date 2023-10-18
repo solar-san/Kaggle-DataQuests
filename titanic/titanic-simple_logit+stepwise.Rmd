@@ -180,12 +180,23 @@ qq_gender <- train_data %>%
     Pclass
     ) %>% 
   reframe(
-    Age_quantiles = quantile(Age, probs = c(.25, .5, .75), na.rm = T)
+    Age_Quantiles = quantile(Age, probs = c(.25, .5, .75), na.rm = T)
+  ) %>% 
+  mutate(
+    Quantile = rep(
+      c(
+        .25, 
+        .50, 
+        .75
+        ),
+      6
+    )
   )
 ```
 
 ```{r}
-qq_gender
+qq_gender %>% 
+  filter(Quantile == .5)
 ```
 
 
