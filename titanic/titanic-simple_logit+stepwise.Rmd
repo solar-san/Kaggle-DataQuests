@@ -25,7 +25,8 @@ lapply(
 theme_set(
   theme_tufte(
     base_size = 12,
-    base_family = 'Atkinson Hyperlegible'
+    base_family = 'Atkinson Hyperlegible',
+    ticks = F
     )
   )
 ```
@@ -72,12 +73,16 @@ Some variables might benefit from scaling: `Fare` and `Age`.
 train_data <- train_data %>% 
   mutate(
     Age = scale(Age),
-    Fare = scale(Fare)
+    Fare = scale(Fare),
+    SibSp = scale(SibSp),
+    Parch = scale(Parch)
   )
 test_data <- test_data %>% 
   mutate(
     Age = scale(Age),
-    Fare = scale(Fare)
+    Fare = scale(Fare),
+    SibSp = scale(SibSp),
+    Parch = scale(Parch)
   )
 ```
 
@@ -105,8 +110,8 @@ factorize_data <- function(dataframe) {
   mutate(
     Pclass = as.factor(Pclass),
     Sex = as.factor(Sex),
-    SibSp = as.factor(SibSp),
-    Parch = as.factor(Parch),
+    # SibSp = as.factor(SibSp),
+    # Parch = as.factor(Parch),
     Cabin = as.factor(Cabin),
     Embarked = as.factor(Embarked)
   )
@@ -122,27 +127,119 @@ test_data_factorized <- factorize_data(dataframe = test_data)
 train_data_factorized %>% summary
 ```
 
-```{r, eval=FALSE}
-list(
-  "train_data_NA" = train_data_factorized %>% 
-    is.na() %>% 
-    sum,
-  "test_data_NA" = test_data_factorized %>% 
-    is.na() %>% 
-    sum
-)
+# Data Visualization
+
+```{r, eval=FALSE, include=FALSE}
+train_data %>% 
+  factorize_data() %>%
+  ggplot(
+    aes(
+      x = Age,
+      fill = factor(Survived)
+    )
+  ) +
+  geom_density(
+    alpha = .7,
+    na.rm = T
+  ) +
+  geom_vline(
+    xintercept = quantile(
+      train_data$Age,
+      c(
+        .25, 
+        .5, 
+        .75
+        ),
+      na.rm = T
+      ), col="white",
+    lwd=1
+    ) +
+   scale_color_viridis_d(
+    aesthetics = c(
+      "colour", 
+      "fill"),
+    option = "F"
+  ) +
+  facet_wrap(
+    ~factor(Pclass)
+  ) +
+  labs(
+    fill = "Survived"
+  ) +
+ 
+  theme(
+    legend.position = "top"
+  )
 ```
 
-There are plenty of `NA`s values; however, if we were to remove them now, we would end up with a different number of dimensions compared to the test-set. Because we have (at the moment) viable replacement values, we will use a `merge` to solve this and proceed removing the `NA`.
-
-To improve the performance of the model, we could use a clustering approach to find robust replacement values for `NA`s.
-
-```{r, eval=FALSE}
-train_data_factorized <- train_data_factorized %>% 
- na.omit()
-test_data_factorized <- test_data_factorized %>% 
- na.omit()
+```{r}
+qq_gender <- train_data %>% 
+  factorize_data() %>% 
+  group_by(
+    Sex,
+    Pclass
+    ) %>% 
+  reframe(
+    Age_quantiles = quantile(Age, probs = c(.25, .5, .75), na.rm = T)
+  )
 ```
+
+```{r}
+qq_gender
+```
+
+
+```{r}
+train_data %>% 
+  factorize_data() %>%
+  ggplot(
+    aes(
+      fill = factor(Survived),
+      x = SibSp,
+      y = Age/100
+    )
+  ) +
+  geom_bar(
+    width = .4,
+    stat = "identity"
+  ) +
+   geom_hline(
+    yintercept = quantile(
+      train_data$Age,
+      c(
+        .25, 
+        .5, 
+        .75
+        ),
+      na.rm = T
+      ), col="grey40",
+    lwd=.3,
+    alpha = .4
+    ) +
+  facet_wrap(
+    vars(
+      Sex,
+      Pclass
+      )
+  ) +
+  scale_color_viridis_d(
+    aesthetics = c(
+      "colour", 
+      "fill"),
+    option = "G",
+    # begin = 1,
+    # end = 0
+  ) +
+  labs(
+    fill = "Survived",
+    x = "Number of Siblings",
+    y = "Age (Normalized)"
+  ) +
+  theme(
+    legend.position = "top"
+  )
+```
+
 
 # Model selection: Logistic Regression + Stepwise Selection
 
