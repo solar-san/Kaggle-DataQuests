@@ -17,6 +17,8 @@ requirements <- c(
   "ggthemes"
 )
 
+submission_flag = FALSE
+
 lapply(
   requirements, 
   library, 
@@ -363,11 +365,13 @@ submission
 
 
 ```{r}
-write.csv(
-  submission,
-  "data/submission.csv",
-  row.names = FALSE
-)
+if(submission_flag == T) {
+  write.csv(
+    submission,
+    "data/submission.csv",
+    row.names = FALSE
+  )
+}
 ```
 
 # Submission result:
