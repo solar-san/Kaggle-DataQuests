@@ -26,6 +26,7 @@ mainfont: "Atkinson Hyperlegible"
 monofont: 'Fira Code'
 ---
 
+![](figures/header.png)
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE
@@ -58,23 +59,7 @@ theme_set(
 # Loading data
 
 ```{r data loader}
-data_loader <- function(filename, dataset, path = "data/", kaggle = FALSE, kaggle_path = NULL) {
-  
-  if(kaggle == FALSE) {
-  path <- paste0(path, filename)
-  read.csv(
-    unz(
-      path,
-      dataset
-    )
-  )
-  } else {
-    read.csv(
-      kaggle_path
-    )
-  }
-  
-}
+source("helper_functions.R")
 ```
 
 ```{r loading data}
@@ -106,14 +91,27 @@ train_data <- train_data %>%
     Age = scale(Age),
     Fare = scale(Fare),
     SibSp = scale(SibSp),
-    Parch = scale(Parch)
+    Parch = scale(Parch),
+    Sex = ifelse(
+        Sex == "male",
+        "Male",
+        ifelse(Sex == "female",
+               "Female",
+               NA
+        )
+      )
   )
 test_data <- test_data %>% 
   mutate(
     Age = scale(Age),
     Fare = scale(Fare),
     SibSp = scale(SibSp),
-    Parch = scale(Parch)
+    Parch = scale(Parch),
+    Sex = ifelse(
+        Sex == "male",
+        "Male",
+        "Female"
+      )
   )
 ```
 
@@ -159,14 +157,6 @@ train_data_factorized %>% summary
 ```
 
 # Data Visualization
-
-## Variable de-scaler
-
-```{r}
-de_scale <- function(x) {
-  x * attr(x, 'scaled:scale') + attr(x, 'scaled:center')
-}
-```
 
 ## Quantiles Table
 
@@ -215,7 +205,7 @@ quantiles_table
 ```{r corrplot, fig.width=6, fig.height=8, fig.align='center'}
 cor_bygender_female <- train_data %>% 
   filter(
-    Sex == "female"
+    Sex == "Female"
     ) %>% 
   GGally::ggcorr(
     method = c(
@@ -231,7 +221,7 @@ cor_bygender_female <- train_data %>%
 
 cor_bygender_male <- train_data %>% 
   filter(
-    Sex == "male"
+    Sex == "Male"
     ) %>% 
   GGally::ggcorr(
     method = c(
@@ -279,11 +269,7 @@ train_data %>%
     ) +
   facet_wrap(
     vars(
-      ifelse(
-        Sex == "male",
-        "Male",
-        "Female"
-      ),
+      Sex,
       ifelse(
         Pclass == 1,
         "First Class",

@@ -4,6 +4,26 @@ require(
   quietly = F
 )
 
+# Data loader with Kaggle flag
+# ############################
+data_loader <- function(filename, dataset, path = "data/", kaggle = FALSE, kaggle_path = NULL) {
+  
+  if(kaggle == FALSE) {
+    path <- paste0(path, filename)
+    read.csv(
+      unz(
+        path,
+        dataset
+      )
+    )
+  } else {
+    read.csv(
+      kaggle_path
+    )
+  }
+  
+}
+
 # Variable de-scaler
 # ##################
 de_scale <- function(x) {
