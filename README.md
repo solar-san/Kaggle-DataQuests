@@ -7,4 +7,5 @@
 This is a list of all the submissions:
 
 - `titanic`, part 1: https://solar-san.github.io/Kaggle-DataQuests/titanic-1.html
+  - `R`
   - Data exploration, data viz, stepwise selection, ROC, logit.  
