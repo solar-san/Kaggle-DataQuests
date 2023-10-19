@@ -13,6 +13,7 @@ output:
     code_folding: show
     fig_width: 10
     fig_height: 10
+    fig_align: 'center'
     df_print: paged
     highlight: arrow
     citations: hover
@@ -35,7 +36,7 @@ requirements <- c(
   "patchwork"
 )
 
-submission_flag = FALSE
+submission_flag = TRUE
 
 lapply(
   requirements, 
@@ -201,7 +202,7 @@ quantiles_table
 
 ## Correlations
 
-```{r, fig.width=10}
+```{r corrplot, fig.width=6, fig.height=8, fig.align='center'}
 cor_bygender_female <- train_data %>% 
   filter(
     Sex == "female"
@@ -214,11 +215,10 @@ cor_bygender_female <- train_data %>%
     geom = "text",
     layout.exp = .3,
     nbreaks = 5,
-    color = "grey30"
-  ) +
-  theme(
-    legend.position = "none"
-  )
+    color = "grey30",
+    legend.position = "top"
+  ) 
+
 cor_bygender_male <- train_data %>% 
   filter(
     Sex == "male"
@@ -231,15 +231,16 @@ cor_bygender_male <- train_data %>%
     geom = "text",
     layout.exp = 1,
     nbreaks = 5,
-    color = "white"
+    color = "white",
+    legend.position = "none"
   )
 
-cor_bygender_female + cor_bygender_male
+cor_bygender_female / cor_bygender_male
 ```
 
 ## Survivorship | Number of Siblings, Gender, Passenger Class, Age
 
-```{r, warning=FALSE, fig.width=10, fig.height=12, fig.cap="Grey line represents the median. The mean is centered at zero."}
+```{r, warning=FALSE, fig.width=10, fig.height=12, fig.cap="The mean age is centered at zero."}
 train_data %>% 
   factorize_data() %>%
   ggplot(
@@ -259,14 +260,6 @@ train_data %>%
     width = .7,
     stat = "identity"
   ) +
-   geom_hline(
-    yintercept = median(
-      train_data$Age,
-      na.rm = T
-      ), col="grey90",
-    lwd=1,
-    alpha = .3
-    ) +
    geom_hline(
     yintercept = mean(
       train_data$Age,
@@ -296,8 +289,8 @@ train_data %>%
     aesthetics = c(
       "colour", 
       "fill"),
-    option = "cividis",
-    begin = 1,
+    option = "A",
+    begin = .6,
     end = 0
   ) +
   labs(
@@ -311,10 +304,69 @@ train_data %>%
     )
 ```
 
+```{r,warning=FALSE, fig.width=10, fig.height=12}
+train_data %>% 
+  factorize_data() %>%
+  mutate(
+    Survived = factor(
+        ifelse(
+          Survived == 1,
+          "Yes",
+          "No"
+          )
+        ),
+    Sex = ifelse(
+        Sex == "male",
+        "Male",
+        "Female"
+      ),
+    PClass = ifelse(
+        Pclass == 1,
+        "First Class",
+        ifelse(
+          Pclass == 2,
+          "Second Class",
+          "Third Class"
+        )
+      )
+    ) %>% 
+  ggplot(
+    aes(
+      x = Survived,
+      y = Age %>% de_scale()
+    )
+  ) +
+  geom_tufteboxplot(
+    median.type = "line",
+    whisker.type = "point",
+    na.rm = T
+  ) +
+  coord_flip() +
+  facet_grid(
+    vars(
+      Sex,
+      Pclass)
+  ) +
+  scale_color_viridis_d(
+    aesthetics = c(
+      "colour", 
+      "fill"),
+    option = "A",
+    begin = .6,
+    end = 0
+  ) +
+  labs(
+    title = "Distributions of Survivorship | Age, Sex, Class",
+    y = "Age"
+  ) +
+  theme(
+    legend.position = "top"
+    )
+```
 
 # (Linear) Model selection: Logistic Regression + Stepwise Selection
 
-## Stepwise Selection
+## Stepwise Selection
 
 ```{r}
 fit_full <- glm(
@@ -392,11 +444,7 @@ predictions <-
   1,
   0
 )
-```
 
-### ROC Curve
-
-```{r}
 pROC::roc(
   train_data_factorized[-train_idx, ]$Survived,
   predictions,
@@ -404,12 +452,19 @@ pROC::roc(
 ```
 
 ```{r}
-plot(
+pROC::ggroc(
   pROC::roc(
   train_data_factorized[-train_idx, ]$Survived,
   predictions,
   )
-)
+) +
+  geom_abline(
+    aes(
+      slope = 1,
+      intercept = 1
+    ),
+    color = "grey90"
+  )
 ```
 ### Error Estimation
 
