@@ -4,7 +4,15 @@ require(
   quietly = F
 )
 
-get_variable_list <- function(df, numerical = TRUE) {
+# Variable de-scaler
+# ##################
+de_scale <- function(x) {
+  x * attr(x, 'scaled:scale') + attr(x, 'scaled:center')
+}
+
+# Getting listed variable classes
+# ###############################
+get_classes_list <- function(df, numerical = TRUE) {
     
   # extract a list of variables from df and their names 
   variables_list <- lapply(df, class)
@@ -36,6 +44,7 @@ get_variable_list <- function(df, numerical = TRUE) {
 }
 
 #### GET DUMMY
+#### #########
 
 get_dummy <- function(df, skip = NA) {
   require(

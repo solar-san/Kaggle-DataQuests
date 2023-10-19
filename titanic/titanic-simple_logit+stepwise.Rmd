@@ -1,9 +1,25 @@
 ---
-title: "Machine_Learning_from_Disaster_with_R"
-subtitle: "Logit Approach"
-author: "Marco Solari"
-date: "2023-09-28"
-output: html_document
+title: "Machine Learning from Disaster"
+subtitle: "Part 1: Data Exploration and Logit in `R`"
+author: "solar-san"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: united
+    toc: true
+    toc_position: left
+    toc_float: true
+    fig_caption: yes
+    code_folding: show
+    fig_width: 10
+    fig_height: 10
+    df_print: paged
+    highlight: arrow
+    citations: hover
+    footnotes: hover
+  fonts:
+    mainfont: "Atkinson Hyperlegible"
+    monofont: "Fira Code"
 ---
 
 ```{r setup, include=FALSE}
@@ -12,9 +28,11 @@ knitr::opts_chunk$set(
   )
 
 requirements <- c(
+  "MASS",
   "tidyverse",
   "glmnet",
-  "ggthemes"
+  "ggthemes",
+  "patchwork"
 )
 
 submission_flag = FALSE
@@ -131,48 +149,15 @@ train_data_factorized %>% summary
 
 # Data Visualization
 
-```{r, eval=FALSE, include=FALSE}
-train_data %>% 
-  factorize_data() %>%
-  ggplot(
-    aes(
-      x = Age,
-      fill = factor(Survived)
-    )
-  ) +
-  geom_density(
-    alpha = .7,
-    na.rm = T
-  ) +
-  geom_vline(
-    xintercept = quantile(
-      train_data$Age,
-      c(
-        .25, 
-        .5, 
-        .75
-        ),
-      na.rm = T
-      ), col="white",
-    lwd=1
-    ) +
-   scale_color_viridis_d(
-    aesthetics = c(
-      "colour", 
-      "fill"),
-    option = "F"
-  ) +
-  facet_wrap(
-    ~factor(Pclass)
-  ) +
-  labs(
-    fill = "Survived"
-  ) +
- 
-  theme(
-    legend.position = "top"
-  )
+## Variable de-scaler
+
+```{r}
+de_scale <- function(x) {
+  x * attr(x, 'scaled:scale') + attr(x, 'scaled:center')
+}
 ```
+
+## Quantiles Table
 
 ```{r}
 quantiles_table <- train_data %>% 
@@ -182,7 +167,21 @@ quantiles_table <- train_data %>%
     Pclass
     ) %>% 
   reframe(
-    Age_Quantiles = quantile(Age, probs = c(.25, .5, .75), na.rm = T)
+    Age_Quantiles = quantile(
+      de_scale(
+        Age
+        ), 
+      probs = c(
+        .25, 
+        .5, 
+        .75
+        ), 
+      na.rm = T
+      ) %>% 
+      round(
+        .,
+        digits = 0
+        )
   ) %>% 
   mutate(
     Quantile = rep(
@@ -200,60 +199,122 @@ quantiles_table <- train_data %>%
 quantiles_table
 ```
 
+## Correlations
 
-```{r}
+```{r, fig.width=10}
+cor_bygender_female <- train_data %>% 
+  filter(
+    Sex == "female"
+    ) %>% 
+  GGally::ggcorr(
+    method = c(
+      "complete.obs",
+      "pearson"
+    ),
+    geom = "text",
+    layout.exp = .3,
+    nbreaks = 5,
+    color = "grey30"
+  ) +
+  theme(
+    legend.position = "none"
+  )
+cor_bygender_male <- train_data %>% 
+  filter(
+    Sex == "male"
+    ) %>% 
+  GGally::ggcorr(
+    method = c(
+      "complete.obs",
+      "pearson"
+    ),
+    geom = "text",
+    layout.exp = 1,
+    nbreaks = 5,
+    color = "white"
+  )
+
+cor_bygender_female + cor_bygender_male
+```
+
+## Survivorship | Number of Siblings, Gender, Passenger Class, Age
+
+```{r, warning=FALSE, fig.width=10, fig.height=12, fig.cap="Grey line represents the median. The mean is centered at zero."}
 train_data %>% 
   factorize_data() %>%
   ggplot(
     aes(
-      fill = factor(Survived),
-      x = SibSp,
+      fill = factor(
+        ifelse(
+          Survived == 1,
+          "Yes",
+          "No"
+          )
+        ),
+      x = de_scale(SibSp),
       y = Age/100
     )
   ) +
   geom_bar(
-    width = .4,
+    width = .7,
     stat = "identity"
   ) +
    geom_hline(
-    yintercept = quantile(
+    yintercept = median(
       train_data$Age,
-      c(
-        .25, 
-        .5, 
-        .75
-        ),
       na.rm = T
-      ), col="grey40",
-    lwd=.3,
-    alpha = .4
+      ), col="grey90",
+    lwd=1,
+    alpha = .3
+    ) +
+   geom_hline(
+    yintercept = mean(
+      train_data$Age,
+      na.rm = T
+      ), col="grey99",
+    lwd = 1,
     ) +
   facet_wrap(
     vars(
-      Sex,
-      Pclass
+      ifelse(
+        Sex == "male",
+        "Male",
+        "Female"
+      ),
+      ifelse(
+        Pclass == 1,
+        "First Class",
+        ifelse(
+          Pclass == 2,
+          "Second Class",
+          "Third Class"
+        )
       )
+    )
   ) +
   scale_color_viridis_d(
     aesthetics = c(
       "colour", 
       "fill"),
-    option = "G",
-    # begin = 1,
-    # end = 0
+    option = "cividis",
+    begin = 1,
+    end = 0
   ) +
   labs(
+    title = "Survivorship on the Titanic based on Number of Siblings, Age, Class, and Gender",
     fill = "Survived",
     x = "Number of Siblings",
     y = "Age (Normalized)"
   ) +
   theme(
     legend.position = "top"
-  )
+    )
 ```
 
 
-# Model selection: Logistic Regression + Stepwise Selection
+# (Linear) Model selection: Logistic Regression + Stepwise Selection
+
+## Stepwise Selection
 
 ```{r}
 fit_full <- glm(
@@ -303,7 +364,22 @@ sel_stepwise <- update(
 sel_stepwise %>% summary()
 ```
 
-# Make Predictions and Submission `csv`
+## Interpreting the Coefficients
+
+```{r}
+convert_to_prob <- function(logit) {
+  exp(logit)/(1+exp(logit))
+}
+```
+
+
+```{r}
+sel_stepwise %>% coef() %>% convert_to_prob()
+```
+
+## Make Predictions and Fine-Tuning
+
+### Predictions
 
 ```{r}
 predictions <- 
@@ -317,6 +393,8 @@ predictions <-
   0
 )
 ```
+
+### ROC Curve
 
 ```{r}
 pROC::roc(
@@ -333,10 +411,13 @@ plot(
   )
 )
 ```
+### Error Estimation
 
 ```{r}
 mean(predictions == train_data_factorized[-train_idx, ]$Survived, na.rm = TRUE )
 ```
+
+## Creating submission `csv`
 
 ```{r}
 predictions_test <- ifelse(
@@ -360,9 +441,8 @@ submission <- data.frame(
 ```
 
 ```{r}
-submission
+submission %>% head
 ```
-
 
 ```{r}
 if(submission_flag == T) {
@@ -374,20 +454,8 @@ if(submission_flag == T) {
 }
 ```
 
-# Submission result:
+## Submission results
 
 > ___Score___: 0.6244
 
 This result is awful: as expected, the _logistic regression_ is highly interpretable but suffers from high bias and therefore has low prediction capabilities.
-
-```{r}
-convert_to_prob <- function(logit) {
-  exp(logit)/(1+exp(logit))
-}
-```
-
-
-```{r}
-sel_stepwise %>% coef() %>% convert_to_prob()
-```
-
