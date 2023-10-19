@@ -2,25 +2,28 @@
 title: "Machine Learning from Disaster"
 subtitle: "Part 1: Data Exploration and Logit in `R`"
 author: "solar-san"
-date: "`r Sys.Date()`"
-output:
-  html_document:
-    theme: united
+date-modified: "`r Sys.Date()`"
+format:
+  html:
+    theme: github
     toc: true
-    toc_position: left
-    toc_float: true
-    fig_caption: yes
-    code_folding: show
-    fig_width: 10
-    fig_height: 10
-    fig_align: 'center'
-    df_print: paged
-    highlight: arrow
-    citations: hover
-    footnotes: hover
-  fonts:
-    mainfont: "Atkinson Hyperlegible"
-    monofont: "Fira Code"
+    toc-location: left
+    fig-align: center
+    fig-width: 10
+    fig-height: 10
+    html-math-method: katex
+    code-overflow: scroll
+    code-copy: hover
+    code-fold: show
+    highlight-style: arrow
+    citations-hover: true
+    footnotes-hover: true
+    header-includes: |
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Code&display=swap" rel="stylesheet">
+mainfont: "Atkinson Hyperlegible"
+monofont: 'Fira Code'
 ---
 
 ```{r setup, include=FALSE}
@@ -55,20 +58,26 @@ theme_set(
 # Loading data
 
 ```{r data loader}
-data_loader <- function(filename, dataset, path = "data/") {
+data_loader <- function(filename, dataset, path = "data/", kaggle = FALSE, kaggle_path = NULL) {
   
+  if(kaggle == FALSE) {
   path <- paste0(path, filename)
   read.csv(
     unz(
       path,
       dataset
     )
-  ) 
-
+  )
+  } else {
+    read.csv(
+      kaggle_path
+    )
+  }
+  
 }
 ```
 
-```{r}
+```{r loading data}
 train_data <- data_loader(
   "titanic.zip",
   "train.csv"
@@ -81,10 +90,11 @@ test_data <- data_loader(
 
 # Data Exploration
 
-```{r}
+```{r dataset str train}
 train_data %>% str
+
 ```
-```{r}
+```{r dataset str test}
 test_data %>% str
 ```
 
@@ -240,7 +250,7 @@ cor_bygender_female / cor_bygender_male
 
 ## Survivorship | Number of Siblings, Gender, Passenger Class, Age
 
-```{r, warning=FALSE, fig.width=10, fig.height=12, fig.cap="The mean age is centered at zero."}
+```{r, warning=FALSE, fig.width=8, fig.height=10, fig.cap="The mean age is centered at zero."}
 train_data %>% 
   factorize_data() %>%
   ggplot(
@@ -411,7 +421,8 @@ sel_stepwise %>% summary()
 ```{r}
 sel_stepwise <- update(
   sel_stepwise,
-  formula = Survived ~ Pclass*Sex*Age
+  formula = Survived ~ Pclass*Sex*Age,
+  subset = train_idx
 )
 sel_stepwise %>% summary()
 ```
