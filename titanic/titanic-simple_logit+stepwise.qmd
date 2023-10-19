@@ -19,6 +19,8 @@ format:
     citations-hover: true
     footnotes-hover: true
     header-includes: |
+      <meta name="author" content="solar-san">
+      <meta name="image" property="og:image" content="https://github.com/solar-san/Kaggle-DataQuests/blob/main/docs/figures/header.png?raw=true">
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Code&display=swap" rel="stylesheet">
@@ -85,7 +87,7 @@ test_data %>% str
 
 Some variables might benefit from scaling: `Fare` and `Age`.
 
-```{r}
+```{r scaling data and transforming variables}
 train_data <- train_data %>% 
   mutate(
     Age = scale(Age),
@@ -115,13 +117,13 @@ test_data <- test_data %>%
   )
 ```
 
-```{r}
+```{r summary descriptive stats of test data}
 train_data %>% summary
 ```
 
 > In the test data we do not have the dependent variable. Therefore, we need to split the dataset and use cross-validation to estimate the error.
 
-```{r}
+```{r creating CV set}
 N_train_obs <- dim(train_data)[1]
 
 train_idx <- sample(
@@ -132,7 +134,7 @@ train_idx <- sample(
 
 # Data transformation: `as.factor`
 
-```{r}
+```{r mutate into factors 1}
 factorize_data <- function(dataframe) {
   dataframe %>% 
   select(-Name, -Ticket) %>% 
@@ -147,12 +149,12 @@ factorize_data <- function(dataframe) {
 }
 ```
 
-```{r}
+```{r mutate into factors 2}
 train_data_factorized <- factorize_data(dataframe = train_data) 
 test_data_factorized <- factorize_data(dataframe = test_data)
 ```
 
-```{r}
+```{r mutate into factors 3}
 train_data_factorized %>% summary
 ```
 
@@ -160,7 +162,7 @@ train_data_factorized %>% summary
 
 ## Quantiles Table
 
-```{r}
+```{r quantiles table 1}
 quantiles_table <- train_data %>% 
   factorize_data() %>% 
   group_by(
@@ -196,7 +198,7 @@ quantiles_table <- train_data %>%
   )
 ```
 
-```{r}
+```{r quantiles table 2}
 quantiles_table
 ```
 
@@ -240,7 +242,7 @@ cor_bygender_female / cor_bygender_male
 
 ## Survivorship | Number of Siblings, Gender, Passenger Class, Age
 
-```{r, warning=FALSE, fig.width=8, fig.height=10, fig.cap="The mean age is centered at zero."}
+```{r survivorship barplot, warning=FALSE, fig.width=8, fig.height=10, fig.cap="The mean age is centered at zero."}
 train_data %>% 
   factorize_data() %>%
   ggplot(
@@ -300,7 +302,7 @@ train_data %>%
     )
 ```
 
-```{r,warning=FALSE, fig.width=10, fig.height=12}
+```{r boxplots,warning=FALSE, fig.width=10, fig.height=12}
 train_data %>% 
   factorize_data() %>%
   mutate(

@@ -212,3 +212,5 @@ rsconnect/
 # RHistory file
 *.RHistory
 titanic/data/submission.csv
+titanic/.Rhistory
+titanic/.Rhistory
