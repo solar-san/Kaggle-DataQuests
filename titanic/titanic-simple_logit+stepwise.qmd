@@ -288,8 +288,8 @@ train_data %>%
       "colour", 
       "fill"),
     option = "A",
-    begin = .6,
-    end = 0
+    begin = 0,
+    end = 0.6
   ) +
   labs(
     title = "Survivorship on the Titanic based on Number of Siblings, Age, Class, and Gender",
@@ -297,8 +297,12 @@ train_data %>%
     x = "Number of Siblings",
     y = "Age (Normalized)"
   ) +
+  theme_tufte(
+    base_size = 16,
+    base_family = "Atkinson Hyperlegible"
+  ) +
   theme(
-    legend.position = "top"
+    legend.position = "top",
     )
 ```
 
@@ -313,11 +317,6 @@ train_data %>%
           "No"
           )
         ),
-    Sex = ifelse(
-        Sex == "male",
-        "Male",
-        "Female"
-      ),
     PClass = ifelse(
         Pclass == 1,
         "First Class",
@@ -337,6 +336,7 @@ train_data %>%
   geom_tufteboxplot(
     median.type = "line",
     whisker.type = "point",
+    size = 2,
     na.rm = T
   ) +
   coord_flip() +
@@ -355,11 +355,16 @@ train_data %>%
   ) +
   labs(
     title = "Distributions of Survivorship | Age, Sex, Class",
-    y = "Age"
+    y = "Age",
+    caption = "On the left side: if the passenger survived. On the left: class (1, 2, 3) and gender."
   ) +
   theme(
     legend.position = "top"
-    )
+    ) +
+  theme_tufte(
+    base_size = 18,
+    base_family = "Atkinson Hyperlegible"
+  )
 ```
 
 # (Linear) Model selection: Logistic Regression + Stepwise Selection

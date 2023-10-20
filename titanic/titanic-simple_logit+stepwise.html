@@ -163,7 +163,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">October 19, 2023</p>
+      <p class="date-modified">October 20, 2023</p>
     </div>
   </div>
     
@@ -570,8 +570,8 @@ not numeric and were ignored</code></pre>
 <span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>      <span class="st">"colour"</span>, </span>
 <span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>      <span class="st">"fill"</span>),</span>
 <span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">option =</span> <span class="st">"A"</span>,</span>
-<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">begin =</span> .<span class="dv">6</span>,</span>
-<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">end =</span> <span class="dv">0</span></span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">begin =</span> <span class="dv">0</span>,</span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">end =</span> <span class="fl">0.6</span></span>
 <span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Survivorship on the Titanic based on Number of Siblings, Age, Class, and Gender"</span>,</span>
@@ -579,9 +579,13 @@ not numeric and were ignored</code></pre>
 <span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Number of Siblings"</span>,</span>
 <span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Age (Normalized)"</span></span>
 <span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span></span>
-<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>(</span>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">16</span>,</span>
+<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_family =</span> <span class="st">"Atkinson Hyperlegible"</span></span>
+<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -605,53 +609,54 @@ not numeric and were ignored</code></pre>
 <span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>          <span class="st">"No"</span></span>
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>          )</span>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sex =</span> <span class="fu">ifelse</span>(</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        Sex <span class="sc">==</span> <span class="st">"male"</span>,</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Male"</span>,</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Female"</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">PClass =</span> <span class="fu">ifelse</span>(</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>        Pclass <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"First Class"</span>,</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(</span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>          Pclass <span class="sc">==</span> <span class="dv">2</span>,</span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Second Class"</span>,</span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Third Class"</span></span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
-<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> Survived,</span>
-<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> Age <span class="sc">%&gt;%</span> <span class="fu">de_scale</span>()</span>
-<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tufteboxplot</span>(</span>
-<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">median.type =</span> <span class="st">"line"</span>,</span>
-<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">whisker.type =</span> <span class="st">"point"</span>,</span>
-<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> T</span>
-<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(</span>
-<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vars</span>(</span>
-<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>      Sex,</span>
-<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a>      Pclass)</span>
-<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(</span>
-<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">aesthetics =</span> <span class="fu">c</span>(</span>
-<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a>      <span class="st">"colour"</span>, </span>
-<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a>      <span class="st">"fill"</span>),</span>
-<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">option =</span> <span class="st">"A"</span>,</span>
-<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">begin =</span> .<span class="dv">6</span>,</span>
-<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">end =</span> <span class="dv">0</span></span>
-<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distributions of Survivorship | Age, Sex, Class"</span>,</span>
-<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Age"</span></span>
-<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb26-56"><a href="#cb26-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span></span>
-<span id="cb26-57"><a href="#cb26-57" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">PClass =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        Pclass <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"First Class"</span>,</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>          Pclass <span class="sc">==</span> <span class="dv">2</span>,</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Second Class"</span>,</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Third Class"</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> Survived,</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> Age <span class="sc">%&gt;%</span> <span class="fu">de_scale</span>()</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tufteboxplot</span>(</span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">median.type =</span> <span class="st">"line"</span>,</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">whisker.type =</span> <span class="st">"point"</span>,</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> T</span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(</span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vars</span>(</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>      Sex,</span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>      Pclass)</span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(</span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">aesthetics =</span> <span class="fu">c</span>(</span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a>      <span class="st">"colour"</span>, </span>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>      <span class="st">"fill"</span>),</span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">option =</span> <span class="st">"A"</span>,</span>
+<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">begin =</span> .<span class="dv">6</span>,</span>
+<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">end =</span> <span class="dv">0</span></span>
+<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distributions of Survivorship | Age, Sex, Class"</span>,</span>
+<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Age"</span>,</span>
+<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"On the left side: if the passenger survived. On the left: class (1, 2, 3) and gender."</span></span>
+<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span></span>
+<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>(</span>
+<span id="cb26-56"><a href="#cb26-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">18</span>,</span>
+<span id="cb26-57"><a href="#cb26-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_family =</span> <span class="st">"Atkinson Hyperlegible"</span></span>
+<span id="cb26-58"><a href="#cb26-58" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="titanic-simple_logit+stepwise_files/figure-html/boxplots-1.png" class="img-fluid" width="960"></p>
@@ -688,107 +693,101 @@ glm(formula = Survived ~ ., family = "binomial", data = train_data_factorized,
 
 Coefficients: (1 not defined because of singularities)
                        Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)           1.409e+00  1.040e+00   1.354   0.1757    
-PassengerId          -3.365e-04  6.727e-04  -0.500   0.6169    
-Pclass2               4.221e-01  1.074e+00   0.393   0.6942    
-Pclass3              -6.364e-01  1.134e+00  -0.561   0.5746    
-SexMale              -2.690e+00  3.703e-01  -7.264 3.77e-13 ***
-Age                  -5.018e-01  2.136e-01  -2.350   0.0188 *  
-SibSp                -4.419e-01  2.411e-01  -1.833   0.0668 .  
-Parch                -9.112e-02  1.749e-01  -0.521   0.6024    
-Fare                  1.033e+00  7.111e-01   1.453   0.1463    
-CabinA16              1.838e+01  1.075e+04   0.002   0.9986    
-CabinA31              2.046e+01  1.075e+04   0.002   0.9985    
-CabinA34              1.905e+01  1.075e+04   0.002   0.9986    
-CabinA36             -1.728e+01  1.075e+04  -0.002   0.9987    
-CabinA5              -1.772e+01  1.075e+04  -0.002   0.9987    
-CabinA6               2.047e+01  1.075e+04   0.002   0.9985    
-CabinA7              -1.813e+01  1.075e+04  -0.002   0.9987    
-CabinB18              1.712e+01  7.405e+03   0.002   0.9982    
-CabinB20              1.967e+01  6.116e+03   0.003   0.9974    
-CabinB22              2.681e-01  2.476e+00   0.108   0.9138    
-CabinB28              1.722e+01  1.075e+04   0.002   0.9987    
-CabinB3               1.502e+01  1.075e+04   0.001   0.9989    
-CabinB30             -1.839e+01  1.075e+04  -0.002   0.9986    
-CabinB35              1.652e+01  7.602e+03   0.002   0.9983    
-CabinB49              1.622e+01  1.075e+04   0.002   0.9988    
-CabinB5               1.402e+01  1.075e+04   0.001   0.9990    
-CabinB51 B53 B55     -3.491e+00  1.148e+01  -0.304   0.7610    
-CabinB57 B59 B63 B66  1.339e+01  7.591e+03   0.002   0.9986    
-CabinB58 B60         -4.946e+00  3.271e+00  -1.512   0.1305    
-CabinB69              1.819e+01  1.075e+04   0.002   0.9987    
-CabinB71             -1.828e+01  1.075e+04  -0.002   0.9986    
-CabinB73              1.682e+01  1.075e+04   0.002   0.9988    
-CabinB77              1.687e+01  1.075e+04   0.002   0.9987    
-CabinB86             -2.025e+01  1.075e+04  -0.002   0.9985    
-CabinB94             -1.742e+01  1.075e+04  -0.002   0.9987    
-CabinB96 B98          1.942e+01  7.507e+03   0.003   0.9979    
-CabinC101             1.930e+01  1.075e+04   0.002   0.9986    
-CabinC110            -1.831e+01  1.075e+04  -0.002   0.9986    
-CabinC118            -1.862e+01  1.075e+04  -0.002   0.9986    
-CabinC123            -1.089e-01  2.005e+00  -0.054   0.9567    
-CabinC124            -1.780e+01  1.075e+04  -0.002   0.9987    
-CabinC125             1.656e+01  1.075e+04   0.002   0.9988    
-CabinC126             2.146e+01  1.075e+04   0.002   0.9984    
-CabinC148             2.022e+01  1.075e+04   0.002   0.9985    
-CabinC2               1.738e+01  1.075e+04   0.002   0.9987    
-CabinC23 C25 C27      1.439e+01  7.601e+03   0.002   0.9985    
-CabinC45              1.378e+01  1.075e+04   0.001   0.9990    
-CabinC52              2.080e+01  1.075e+04   0.002   0.9985    
-CabinC65              1.579e+01  1.075e+04   0.001   0.9988    
-CabinC68             -1.318e+00  2.187e+00  -0.602   0.5469    
-CabinC70              1.834e+01  1.075e+04   0.002   0.9986    
-CabinC82             -2.259e+01  1.075e+04  -0.002   0.9983    
-CabinC83             -5.767e-01  2.082e+00  -0.277   0.7818    
-CabinC85              1.719e+01  1.075e+04   0.002   0.9987    
-CabinC92              2.004e+01  1.075e+04   0.002   0.9985    
-CabinC99              1.603e+01  1.075e+04   0.001   0.9988    
-CabinD               -1.883e+01  1.075e+04  -0.002   0.9986    
-CabinD10 D12          1.927e+01  1.075e+04   0.002   0.9986    
-CabinD17              1.896e+01  7.604e+03   0.002   0.9980    
-CabinD19              2.121e+01  1.075e+04   0.002   0.9984    
-CabinD20              1.775e+01  7.604e+03   0.002   0.9981    
-CabinD26             -1.848e+01  1.075e+04  -0.002   0.9986    
-CabinD30             -1.869e+01  1.075e+04  -0.002   0.9986    
-CabinD35              2.102e+01  1.075e+04   0.002   0.9984    
-CabinD36              1.615e+01  1.075e+04   0.002   0.9988    
-CabinD37              1.799e+01  1.075e+04   0.002   0.9987    
-CabinD47              1.793e+01  1.075e+04   0.002   0.9987    
-CabinD49              1.922e+01  1.075e+04   0.002   0.9986    
-CabinD56              2.073e+01  1.075e+04   0.002   0.9985    
-CabinD9               1.686e+01  1.075e+04   0.002   0.9987    
-CabinE10              2.196e+01  1.075e+04   0.002   0.9984    
-CabinE101             1.805e+01  7.603e+03   0.002   0.9981    
-CabinE121             2.119e+01  1.075e+04   0.002   0.9984    
-CabinE17              2.174e+01  1.075e+04   0.002   0.9984    
-CabinE24              2.138e+01  1.075e+04   0.002   0.9984    
-CabinE25              2.112e+01  7.604e+03   0.003   0.9978    
-CabinE33              1.740e+01  1.075e+04   0.002   0.9987    
-CabinE36              1.692e+01  1.075e+04   0.002   0.9987    
-CabinE40              1.569e+01  1.075e+04   0.001   0.9988    
-CabinE44             -1.778e+01  1.075e+04  -0.002   0.9987    
-CabinE46             -1.810e+01  1.075e+04  -0.002   0.9987    
-CabinE49              1.737e+01  1.075e+04   0.002   0.9987    
-CabinE50              1.989e+01  1.075e+04   0.002   0.9985    
-CabinE67              1.794e+01  1.075e+04   0.002   0.9987    
-CabinE8               1.978e+01  6.477e+03   0.003   0.9976    
-CabinF G73           -1.753e+01  1.075e+04  -0.002   0.9987    
-CabinF2               1.996e+01  1.075e+04   0.002   0.9985    
-CabinF33              1.801e+01  6.185e+03   0.003   0.9977    
-CabinF4               1.909e+01  6.496e+03   0.003   0.9977    
-CabinG6              -2.697e-01  1.473e+00  -0.183   0.8547    
-EmbarkedC             5.885e-01  5.338e-01   1.102   0.2703    
-EmbarkedQ            -9.781e-01  8.898e-01  -1.099   0.2717    
+(Intercept)           2.659e+00  9.453e-01   2.813   0.0049 ** 
+PassengerId           7.424e-04  7.665e-04   0.969   0.3328    
+Pclass2              -1.374e+00  9.035e-01  -1.520   0.1284    
+Pclass3              -2.263e+00  9.625e-01  -2.351   0.0187 *  
+SexMale              -3.284e+00  4.287e-01  -7.660 1.86e-14 ***
+Age                  -1.132e+00  2.633e-01  -4.300 1.71e-05 ***
+SibSp                -4.389e-01  2.853e-01  -1.538   0.1240    
+Parch                -2.114e-01  1.758e-01  -1.202   0.2292    
+Fare                  1.217e+00  6.669e-01   1.825   0.0680 .  
+CabinA16              1.699e+01  1.075e+04   0.002   0.9987    
+CabinA20              1.989e+01  1.075e+04   0.002   0.9985    
+CabinA23              2.339e+01  1.075e+04   0.002   0.9983    
+CabinA31              1.972e+01  1.075e+04   0.002   0.9985    
+CabinA34              1.686e+01  1.075e+04   0.002   0.9987    
+CabinA36             -1.834e+01  1.075e+04  -0.002   0.9986    
+CabinA5              -1.701e+01  1.075e+04  -0.002   0.9987    
+CabinA6               1.965e+01  1.075e+04   0.002   0.9985    
+CabinB19             -1.697e+01  1.075e+04  -0.002   0.9987    
+CabinB20              1.482e+01  1.075e+04   0.001   0.9989    
+CabinB22              1.626e+01  1.075e+04   0.002   0.9988    
+CabinB28              1.733e+01  1.075e+04   0.002   0.9987    
+CabinB3               1.293e+01  1.075e+04   0.001   0.9990    
+CabinB35              1.393e+01  1.075e+04   0.001   0.9990    
+CabinB37             -1.819e+01  1.075e+04  -0.002   0.9987    
+CabinB38             -1.832e+01  1.075e+04  -0.002   0.9986    
+CabinB4               1.684e+01  1.075e+04   0.002   0.9988    
+CabinB41              2.047e+01  1.075e+04   0.002   0.9985    
+CabinB49              1.727e+01  1.075e+04   0.002   0.9987    
+CabinB5               1.082e+01  1.075e+04   0.001   0.9992    
+CabinB51 B53 B55      7.530e+00  1.075e+04   0.001   0.9994    
+CabinB57 B59 B63 B66  1.025e+01  7.601e+03   0.001   0.9989    
+CabinB58 B60          1.210e+01  1.075e+04   0.001   0.9991    
+CabinB73              1.473e+01  1.075e+04   0.001   0.9989    
+CabinB79              1.383e+01  1.075e+04   0.001   0.9990    
+CabinB82 B84         -2.056e+01  1.075e+04  -0.002   0.9985    
+CabinB86             -2.179e+01  1.075e+04  -0.002   0.9984    
+CabinB96 B98          1.600e+01  7.064e+03   0.002   0.9982    
+CabinC101             1.831e+01  1.075e+04   0.002   0.9986    
+CabinC110            -1.847e+01  1.075e+04  -0.002   0.9986    
+CabinC111            -2.030e+01  1.075e+04  -0.002   0.9985    
+CabinC118            -1.940e+01  1.075e+04  -0.002   0.9986    
+CabinC123            -1.001e+00  2.104e+00  -0.476   0.6342    
+CabinC125             1.590e+01  1.075e+04   0.001   0.9988    
+CabinC22 C26         -2.527e+01  1.075e+04  -0.002   0.9981    
+CabinC23 C25 C27     -5.981e+00  3.295e+00  -1.815   0.0695 .  
+CabinC30             -1.760e+01  1.075e+04  -0.002   0.9987    
+CabinC45              1.109e+01  1.075e+04   0.001   0.9992    
+CabinC49             -2.184e+01  1.075e+04  -0.002   0.9984    
+CabinC65             -4.901e+00  2.274e+00  -2.156   0.0311 *  
+CabinC68             -2.037e+01  1.075e+04  -0.002   0.9985    
+CabinC7               1.374e+01  1.075e+04   0.001   0.9990    
+CabinC78             -1.717e+01  1.075e+04  -0.002   0.9987    
+CabinC83              1.598e+01  1.075e+04   0.001   0.9988    
+CabinC92              1.921e+01  1.075e+04   0.002   0.9986    
+CabinD                1.869e+01  1.075e+04   0.002   0.9986    
+CabinD10 D12          1.794e+01  1.075e+04   0.002   0.9987    
+CabinD15              1.469e+01  1.075e+04   0.001   0.9989    
+CabinD17              1.754e+01  1.075e+04   0.002   0.9987    
+CabinD20              1.632e+01  1.075e+04   0.002   0.9988    
+CabinD26             -2.085e+01  1.075e+04  -0.002   0.9985    
+CabinD33              1.832e+01  6.400e+03   0.003   0.9977    
+CabinD36              1.378e+01  7.520e+03   0.002   0.9985    
+CabinD37              1.719e+01  1.075e+04   0.002   0.9987    
+CabinD46             -1.833e+01  1.075e+04  -0.002   0.9986    
+CabinD49              1.723e+01  1.075e+04   0.002   0.9987    
+CabinD50             -1.728e+01  1.075e+04  -0.002   0.9987    
+CabinE121             1.977e+01  6.922e+03   0.003   0.9977    
+CabinE17              2.104e+01  1.075e+04   0.002   0.9984    
+CabinE24              2.021e+01  7.559e+03   0.003   0.9979    
+CabinE31             -1.836e+01  1.075e+04  -0.002   0.9986    
+CabinE40              1.388e+01  1.075e+04   0.001   0.9990    
+CabinE44              1.671e+01  1.075e+04   0.002   0.9988    
+CabinE46             -1.784e+01  1.075e+04  -0.002   0.9987    
+CabinE49              1.527e+01  1.075e+04   0.001   0.9989    
+CabinE50              1.823e+01  1.075e+04   0.002   0.9986    
+CabinE58             -1.823e+01  1.075e+04  -0.002   0.9986    
+CabinE67             -9.009e-01  2.562e+00  -0.352   0.7251    
+CabinE8               1.902e+01  1.075e+04   0.002   0.9986    
+CabinF G63           -1.595e+01  1.075e+04  -0.001   0.9988    
+CabinF2              -1.678e+01  1.075e+04  -0.002   0.9988    
+CabinF33              1.845e+01  1.075e+04   0.002   0.9986    
+CabinF4               1.872e+01  6.230e+03   0.003   0.9976    
+CabinG6              -2.098e+01  6.909e+03  -0.003   0.9976    
+EmbarkedC             8.424e-01  5.535e-01   1.522   0.1280    
+EmbarkedQ            -1.769e+00  9.382e-01  -1.886   0.0593 .  
 EmbarkedS                    NA         NA      NA       NA    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 490.37  on 357  degrees of freedom
-Residual deviance: 226.43  on 267  degrees of freedom
-  (87 observations deleted due to missingness)
-AIC: 408.43
+    Null deviance: 463.71  on 345  degrees of freedom
+Residual deviance: 195.80  on 261  degrees of freedom
+  (99 observations deleted due to missingness)
+AIC: 365.8
 
 Number of Fisher Scoring iterations: 18</code></pre>
 </div>
@@ -818,92 +817,92 @@ Number of Fisher Scoring iterations: 18</code></pre>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Start:  AIC=844.53
+<pre><code>Start:  AIC=773.15
 Survived ~ PassengerId + Pclass + Sex + Age + SibSp + Parch + 
     Fare + Cabin + Embarked
 
               Df Deviance    AIC
-- Cabin       79   300.94 382.45
-- Embarked     2   229.30 833.82
-- Pclass       2   233.01 837.53
-- PassengerId  1   226.68 837.99
-- Parch        1   226.70 838.02
-- SibSp        1   230.05 841.36
-- Fare         1   230.35 841.66
-- Age          1   232.31 843.63
-&lt;none&gt;             226.43 844.53
-- Sex          1   289.63 900.94
+- Cabin       73   273.62 355.13
+- Embarked     2   202.96 766.73
+- Pclass       2   203.13 766.90
+- PassengerId  1   196.75 767.30
+- Parch        1   197.38 767.93
+- SibSp        1   198.43 768.99
+- Fare         1   199.04 769.60
+&lt;none&gt;             195.80 773.15
+- Age          1   218.45 789.01
+- Sex          1   275.71 846.27
 
-Step:  AIC=382.45
+Step:  AIC=355.13
 Survived ~ PassengerId + Pclass + Sex + Age + SibSp + Parch + 
     Fare + Embarked
 
               Df Deviance    AIC
-- Embarked     3   303.28 364.42
-- Parch        1   301.12 375.84
-- PassengerId  1   301.13 375.85
-- Fare         1   301.48 376.20
-- SibSp        1   303.31 378.03
-&lt;none&gt;             300.94 382.45
-- Age          1   318.85 393.56
-- Pclass       2   333.21 401.13
-- Sex          1   385.88 460.59
+- Embarked     3   282.58 343.71
+- SibSp        1   273.92 348.64
+- Fare         1   274.69 349.40
+- Parch        1   275.96 350.68
+- PassengerId  1   278.96 353.68
+&lt;none&gt;             273.62 355.13
+- Pclass       2   295.00 362.92
+- Age          1   296.78 371.50
+- Sex          1   368.02 442.74
 
-Step:  AIC=364.42
+Step:  AIC=343.71
 Survived ~ PassengerId + Pclass + Sex + Age + SibSp + Parch + 
     Fare
 
               Df Deviance    AIC
-- PassengerId  1   303.36 357.69
-- Parch        1   303.53 357.86
-- Fare         1   304.03 358.37
-- SibSp        1   305.85 360.19
-&lt;none&gt;             303.28 364.42
-- Age          1   322.16 376.50
-- Pclass       2   338.79 386.33
-- Sex          1   388.90 443.24
+- SibSp        1   282.96 337.30
+- Fare         1   284.17 338.51
+- Parch        1   285.02 339.36
+- PassengerId  1   287.41 341.75
+&lt;none&gt;             282.58 343.71
+- Pclass       2   309.84 357.38
+- Age          1   307.39 361.73
+- Sex          1   375.73 430.07
 
-Step:  AIC=357.69
-Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare
+Step:  AIC=337.3
+Survived ~ PassengerId + Pclass + Sex + Age + Parch + Fare
 
-         Df Deviance    AIC
-- Parch   1   303.58 351.12
-- Fare    1   304.09 351.64
-- SibSp   1   306.04 353.59
-&lt;none&gt;        303.36 357.69
-- Age     1   322.32 369.87
-- Pclass  2   338.95 379.70
-- Sex     1   388.91 436.46
+              Df Deviance    AIC
+- Fare         1   284.33 331.87
+- Parch        1   286.12 333.67
+- PassengerId  1   288.12 335.66
+&lt;none&gt;             282.96 337.30
+- Pclass       2   311.83 352.58
+- Age          1   307.75 355.30
+- Sex          1   378.36 425.91
 
-Step:  AIC=351.12
-Survived ~ Pclass + Sex + Age + SibSp + Fare
+Step:  AIC=331.87
+Survived ~ PassengerId + Pclass + Sex + Age + Parch
 
-         Df Deviance    AIC
-- Fare    1   304.16 344.91
-- SibSp   1   306.94 347.70
-&lt;none&gt;        303.58 351.12
-- Age     1   322.58 363.33
-- Pclass  2   341.55 375.51
-- Sex     1   391.71 432.46
+              Df Deviance    AIC
+- Parch        1   286.60 327.35
+- PassengerId  1   289.23 329.98
+&lt;none&gt;             284.33 331.87
+- Age          1   312.01 352.76
+- Pclass       2   348.13 382.09
+- Sex          1   381.49 422.25
 
-Step:  AIC=344.91
-Survived ~ Pclass + Sex + Age + SibSp
+Step:  AIC=327.35
+Survived ~ PassengerId + Pclass + Sex + Age
 
-         Df Deviance    AIC
-- SibSp   1   307.26 341.22
-&lt;none&gt;        304.16 344.91
-- Age     1   324.23 358.20
-- Pclass  2   374.74 401.91
-- Sex     1   395.76 429.72
+              Df Deviance    AIC
+- PassengerId  1   291.05 325.01
+&lt;none&gt;             286.60 327.35
+- Age          1   313.25 347.21
+- Pclass       2   352.26 379.43
+- Sex          1   381.81 415.78
 
-Step:  AIC=341.22
+Step:  AIC=325.01
 Survived ~ Pclass + Sex + Age
 
          Df Deviance    AIC
-&lt;none&gt;        307.26 341.22
-- Age     1   324.47 351.64
-- Pclass  2   376.90 397.28
-- Sex     1   396.26 423.43</code></pre>
+&lt;none&gt;        291.05 325.01
+- Age     1   316.62 343.79
+- Pclass  2   354.75 375.13
+- Sex     1   383.99 411.16</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -919,20 +918,20 @@ glm(formula = Survived ~ Pclass + Sex + Age, family = "binomial",
 
 Coefficients:
             Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)   3.1137     0.3896   7.991 1.34e-15 ***
-Pclass2      -1.4170     0.4058  -3.492  0.00048 ***
-Pclass3      -2.9857     0.4074  -7.328 2.33e-13 ***
-SexMale      -2.6092     0.3081  -8.469  &lt; 2e-16 ***
-Age          -0.6434     0.1636  -3.933 8.39e-05 ***
+(Intercept)   3.1164     0.4141   7.526 5.23e-14 ***
+Pclass2      -1.8697     0.4189  -4.463 8.08e-06 ***
+Pclass3      -3.1146     0.4417  -7.052 1.76e-12 ***
+SexMale      -2.7313     0.3190  -8.563  &lt; 2e-16 ***
+Age          -0.8116     0.1728  -4.696 2.66e-06 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 490.37  on 357  degrees of freedom
-Residual deviance: 307.26  on 353  degrees of freedom
-  (87 observations deleted due to missingness)
-AIC: 317.26
+    Null deviance: 463.71  on 345  degrees of freedom
+Residual deviance: 291.05  on 341  degrees of freedom
+  (99 observations deleted due to missingness)
+AIC: 301.05
 
 Number of Fisher Scoring iterations: 5</code></pre>
 </div>
@@ -955,28 +954,30 @@ glm(formula = Survived ~ Pclass + Sex + Age + Pclass:Sex + Pclass:Age +
     subset = train_idx, na.action = na.omit)
 
 Coefficients:
-                      Estimate Std. Error z value Pr(&gt;|z|)
-(Intercept)          1.857e+01  1.020e+03   0.018    0.985
-Pclass2             -1.478e+01  1.020e+03  -0.014    0.988
-Pclass3             -1.897e+01  1.020e+03  -0.019    0.985
-SexMale             -1.801e+01  1.020e+03  -0.018    0.986
-Age                  7.118e-09  1.099e+03   0.000    1.000
-Pclass2:SexMale      1.251e+01  1.020e+03   0.012    0.990
-Pclass3:SexMale      1.661e+01  1.020e+03   0.016    0.987
-Pclass2:Age         -1.008e+00  1.099e+03  -0.001    0.999
-Pclass3:Age         -3.841e-01  1.099e+03   0.000    1.000
-SexMale:Age         -1.147e+00  1.099e+03  -0.001    0.999
-Pclass2:SexMale:Age  1.056e+00  1.099e+03   0.001    0.999
-Pclass3:SexMale:Age  1.181e+00  1.099e+03   0.001    0.999
+                    Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)          2.99679    0.84455   3.548 0.000388 ***
+Pclass2             -0.53821    1.03736  -0.519 0.603880    
+Pclass3             -3.73361    0.93016  -4.014 5.97e-05 ***
+SexMale             -2.90940    0.91601  -3.176 0.001492 ** 
+Age                 -0.16803    0.81304  -0.207 0.836270    
+Pclass2:SexMale     -3.81224    1.63384  -2.333 0.019632 *  
+Pclass3:SexMale      1.32580    1.06625   1.243 0.213715    
+Pclass2:Age         -0.04378    1.02517  -0.043 0.965940    
+Pclass3:Age         -0.79369    0.91013  -0.872 0.383170    
+SexMale:Age         -0.31884    0.86118  -0.370 0.711211    
+Pclass2:SexMale:Age -3.05475    1.67984  -1.818 0.068991 .  
+Pclass3:SexMale:Age  0.24327    1.02206   0.238 0.811868    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 490.37  on 357  degrees of freedom
-Residual deviance: 276.98  on 346  degrees of freedom
-  (87 observations deleted due to missingness)
-AIC: 300.98
+    Null deviance: 463.71  on 345  degrees of freedom
+Residual deviance: 258.07  on 334  degrees of freedom
+  (99 observations deleted due to missingness)
+AIC: 282.07
 
-Number of Fisher Scoring iterations: 17</code></pre>
+Number of Fisher Scoring iterations: 7</code></pre>
 </div>
 </div>
 </section>
@@ -997,11 +998,11 @@ Number of Fisher Scoring iterations: 17</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>        (Intercept)             Pclass2             Pclass3             SexMale 
-       1.000000e+00        3.822883e-07        5.799849e-09        1.504116e-08 
+         0.95242870          0.36860382          0.02334831          0.05169073 
                 Age     Pclass2:SexMale     Pclass3:SexMale         Pclass2:Age 
-       5.000000e-01        9.999963e-01        9.999999e-01        2.672804e-01 
+         0.45809174          0.02162083          0.79014451          0.48905785 
         Pclass3:Age         SexMale:Age Pclass2:SexMale:Age Pclass3:SexMale:Age 
-       4.051273e-01        2.410111e-01        7.419611e-01        7.651561e-01 </code></pre>
+         0.31137612          0.42095960          0.04501296          0.56051848 </code></pre>
 </div>
 </div>
 </section>
@@ -1039,8 +1040,8 @@ Number of Fisher Scoring iterations: 17</code></pre>
 Call:
 roc.default(response = train_data_factorized[-train_idx, ]$Survived,     predictor = predictions)
 
-Data: predictions in 222 controls (train_data_factorized[-train_idx, ]$Survived 0) &lt; 134 cases (train_data_factorized[-train_idx, ]$Survived 1).
-Area under the curve: 0.7267</code></pre>
+Data: predictions in 214 controls (train_data_factorized[-train_idx, ]$Survived 0) &lt; 154 cases (train_data_factorized[-train_idx, ]$Survived 1).
+Area under the curve: 0.7587</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1079,7 +1080,7 @@ Area under the curve: 0.7267</code></pre>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(predictions <span class="sc">==</span> train_data_factorized[<span class="sc">-</span>train_idx, ]<span class="sc">$</span>Survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7808989</code></pre>
+<pre><code>[1] 0.7934783</code></pre>
 </div>
 </div>
 </section>
