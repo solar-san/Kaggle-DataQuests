@@ -42,7 +42,7 @@ requirements <- c(
   "patchwork"
 )
 
-submission_flag = TRUE
+submission_flag = FALSE
 
 lapply(
   requirements, 
@@ -209,6 +209,9 @@ cor_bygender_female <- train_data %>%
   filter(
     Sex == "Female"
     ) %>% 
+  select(
+    -PassengerId
+  ) %>% 
   GGally::ggcorr(
     method = c(
       "complete.obs",
@@ -218,8 +221,16 @@ cor_bygender_female <- train_data %>%
     layout.exp = .3,
     nbreaks = 5,
     color = "grey30",
-    legend.position = "top"
-  ) 
+    size = 5,
+    family = "Atkinson Hyperlegible",
+    legend.position = "top",
+    
+    ) +
+  theme(
+    legend.text = element_text(
+      size = 14,
+      ),
+    )
 
 cor_bygender_male <- train_data %>% 
   filter(
@@ -231,11 +242,11 @@ cor_bygender_male <- train_data %>%
       "pearson"
     ),
     geom = "text",
-    layout.exp = 1,
     nbreaks = 5,
     color = "white",
     legend.position = "none"
   )
+  
 
 cor_bygender_female / cor_bygender_male
 ```
@@ -371,7 +382,7 @@ train_data %>%
 
 ## Stepwise Selection
 
-```{r}
+```{r logit full fit}
 fit_full <- glm(
   Survived ~ ., 
   data = train_data_factorized, 
@@ -381,11 +392,11 @@ fit_full <- glm(
 )
 ```
 
-```{r}
+```{r logit full summary}
 fit_full %>% summary
 ```
 
-```{r}
+```{r logit null fit}
 fit_null <- glm(
   Survived ~ 1, 
   data = train_data_factorized, 
@@ -395,7 +406,7 @@ fit_null <- glm(
 )
 ```
 
-```{r}
+```{r stepwise selection}
 sel_stepwise <- step(
   fit_full,
   scope = c(fit_null, fit_full),
@@ -407,14 +418,14 @@ sel_stepwise <- step(
 ```
 
 
-```{r}
+```{r stepwise output summary}
 sel_stepwise %>% summary()
 ```
 
-```{r}
+```{r updated model with interaction terms}
 sel_stepwise <- update(
   sel_stepwise,
-  formula = Survived ~ Pclass*Sex*Age,
+  formula = Survived ~ Pclass*Sex*Age + SibSp,
   subset = train_idx
 )
 sel_stepwise %>% summary()
@@ -422,14 +433,14 @@ sel_stepwise %>% summary()
 
 ## Interpreting the Coefficients
 
-```{r}
+```{r converting coefficients}
 convert_to_prob <- function(logit) {
   exp(logit)/(1+exp(logit))
 }
 ```
 
 
-```{r}
+```{r showing converted coefficients}
 sel_stepwise %>% coef() %>% convert_to_prob()
 ```
 
@@ -437,7 +448,7 @@ sel_stepwise %>% coef() %>% convert_to_prob()
 
 ### Predictions
 
-```{r}
+```{r computing predictions and ROC}
 predictions <- 
   ifelse(
   predict(
@@ -455,7 +466,7 @@ pROC::roc(
 )
 ```
 
-```{r}
+```{r visualizing ROC}
 pROC::ggroc(
   pROC::roc(
   train_data_factorized[-train_idx, ]$Survived,
@@ -472,13 +483,13 @@ pROC::ggroc(
 ```
 ### Error Estimation
 
-```{r}
+```{r estimating error}
 mean(predictions == train_data_factorized[-train_idx, ]$Survived, na.rm = TRUE )
 ```
 
 ## Creating submission `csv`
 
-```{r}
+```{r }
 predictions_test <- ifelse(
   predict(
     sel_stepwise,
