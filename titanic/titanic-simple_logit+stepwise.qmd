@@ -218,7 +218,7 @@ cor_bygender_female <- train_data %>%
       "pearson"
     ),
     geom = "text",
-    layout.exp = .3,
+    layout.exp = 1,
     nbreaks = 5,
     color = "grey30",
     size = 5,
@@ -226,6 +226,9 @@ cor_bygender_female <- train_data %>%
     legend.position = "top",
     
     ) +
+  labs(
+    title = "Correlation Matrices"
+  ) +
   theme(
     legend.text = element_text(
       size = 14,

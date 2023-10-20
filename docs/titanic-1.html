@@ -467,7 +467,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">"pearson"</span></span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">layout.exp =</span> .<span class="dv">3</span>,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">layout.exp =</span> <span class="dv">1</span>,</span>
 <span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">nbreaks =</span> <span class="dv">5</span>,</span>
 <span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"grey30"</span>,</span>
 <span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">5</span>,</span>
@@ -475,11 +475,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
 <span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">14</span>,</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Correlation Matrices"</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">14</span>,</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Registered S3 method overwritten by 'GGally':
@@ -491,26 +494,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 "text", : data in column(s) 'Name', 'Sex', 'Ticket', 'Cabin', 'Embarked' are
 not numeric and were ignored</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in textData$x[1:layout.exp] &lt;- spacer: number of items to replace is
-not a multiple of replacement length</code></pre>
-</div>
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>cor_bygender_male <span class="ot">&lt;-</span> train_data <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    Sex <span class="sc">==</span> <span class="st">"Male"</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  GGally<span class="sc">::</span><span class="fu">ggcorr</span>(</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="fu">c</span>(</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">"complete.obs"</span>,</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"pearson"</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">nbreaks =</span> <span class="dv">5</span>,</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"white"</span>,</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cor_bygender_male <span class="ot">&lt;-</span> train_data <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    Sex <span class="sc">==</span> <span class="st">"Male"</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  GGally<span class="sc">::</span><span class="fu">ggcorr</span>(</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="fu">c</span>(</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">"complete.obs"</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"pearson"</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">nbreaks =</span> <span class="dv">5</span>,</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"white"</span>,</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in GGally::ggcorr(., method = c("complete.obs", "pearson"), geom =
@@ -519,7 +518,7 @@ not numeric and were ignored</code></pre>
 </div>
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>cor_bygender_female <span class="sc">/</span> cor_bygender_male</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cor_bygender_female <span class="sc">/</span> cor_bygender_male</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -535,67 +534,67 @@ not numeric and were ignored</code></pre>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>train_data <span class="sc">%&gt;%</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factorize_data</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">fill =</span> <span class="fu">factor</span>(</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>          Survived <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Yes"</span>,</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>          <span class="st">"No"</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>          )</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="fu">de_scale</span>(SibSp),</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> Age<span class="sc">/</span><span class="dv">100</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> .<span class="dv">7</span>,</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"identity"</span></span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_hline</span>(</span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">yintercept =</span> <span class="fu">mean</span>(</span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>      train_data<span class="sc">$</span>Age,</span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">na.rm =</span> T</span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>      ), <span class="at">col=</span><span class="st">"grey99"</span>,</span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="dv">1</span>,</span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(</span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vars</span>(</span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>      Sex,</span>
-<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ifelse</span>(</span>
-<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>        Pclass <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">"First Class"</span>,</span>
-<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(</span>
-<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>          Pclass <span class="sc">==</span> <span class="dv">2</span>,</span>
-<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Second Class"</span>,</span>
-<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Third Class"</span></span>
-<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(</span>
-<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">aesthetics =</span> <span class="fu">c</span>(</span>
-<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>      <span class="st">"colour"</span>, </span>
-<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>      <span class="st">"fill"</span>),</span>
-<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">option =</span> <span class="st">"A"</span>,</span>
-<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">begin =</span> <span class="dv">0</span>,</span>
-<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">end =</span> <span class="fl">0.6</span></span>
-<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Survivorship on the Titanic based on Number of Siblings, Age, Class, and Gender"</span>,</span>
-<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Survived"</span>,</span>
-<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Number of Siblings"</span>,</span>
-<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Age (Normalized)"</span></span>
-<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>(</span>
-<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">16</span>,</span>
-<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_family =</span> <span class="st">"Atkinson Hyperlegible"</span></span>
-<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
-<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>train_data <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factorize_data</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">fill =</span> <span class="fu">factor</span>(</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>          Survived <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Yes"</span>,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>          <span class="st">"No"</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="fu">de_scale</span>(SibSp),</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> Age<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> .<span class="dv">7</span>,</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"identity"</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_hline</span>(</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">yintercept =</span> <span class="fu">mean</span>(</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>      train_data<span class="sc">$</span>Age,</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">na.rm =</span> T</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>      ), <span class="at">col=</span><span class="st">"grey99"</span>,</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="dv">1</span>,</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vars</span>(</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>      Sex,</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ifelse</span>(</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>        Pclass <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">"First Class"</span>,</span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(</span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>          Pclass <span class="sc">==</span> <span class="dv">2</span>,</span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Second Class"</span>,</span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Third Class"</span></span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(</span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">aesthetics =</span> <span class="fu">c</span>(</span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>      <span class="st">"colour"</span>, </span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>      <span class="st">"fill"</span>),</span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">option =</span> <span class="st">"A"</span>,</span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">begin =</span> <span class="dv">0</span>,</span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">end =</span> <span class="fl">0.6</span></span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Survivorship on the Titanic based on Number of Siblings, Age, Class, and Gender"</span>,</span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Survived"</span>,</span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Number of Siblings"</span>,</span>
+<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Age (Normalized)"</span></span>
+<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>(</span>
+<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">16</span>,</span>
+<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_family =</span> <span class="st">"Atkinson Hyperlegible"</span></span>
+<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -609,64 +608,64 @@ not numeric and were ignored</code></pre>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>train_data <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factorize_data</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Survived =</span> <span class="fu">factor</span>(</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>          Survived <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Yes"</span>,</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>          <span class="st">"No"</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>          )</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">PClass =</span> <span class="fu">ifelse</span>(</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        Pclass <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"First Class"</span>,</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>          Pclass <span class="sc">==</span> <span class="dv">2</span>,</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Second Class"</span>,</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Third Class"</span></span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> Survived,</span>
-<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> Age <span class="sc">%&gt;%</span> <span class="fu">de_scale</span>()</span>
-<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tufteboxplot</span>(</span>
-<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">median.type =</span> <span class="st">"line"</span>,</span>
-<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">whisker.type =</span> <span class="st">"point"</span>,</span>
-<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span>,</span>
-<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> T</span>
-<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(</span>
-<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vars</span>(</span>
-<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>      Sex,</span>
-<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>      Pclass)</span>
-<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(</span>
-<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">aesthetics =</span> <span class="fu">c</span>(</span>
-<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a>      <span class="st">"colour"</span>, </span>
-<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>      <span class="st">"fill"</span>),</span>
-<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">option =</span> <span class="st">"A"</span>,</span>
-<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">begin =</span> .<span class="dv">6</span>,</span>
-<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">end =</span> <span class="dv">0</span></span>
-<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distributions of Survivorship | Age, Sex, Class"</span>,</span>
-<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Age"</span>,</span>
-<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"On the left side: if the passenger survived. On the left: class (1, 2, 3) and gender."</span></span>
-<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span></span>
-<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>(</span>
-<span id="cb26-56"><a href="#cb26-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">18</span>,</span>
-<span id="cb26-57"><a href="#cb26-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_family =</span> <span class="st">"Atkinson Hyperlegible"</span></span>
-<span id="cb26-58"><a href="#cb26-58" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>train_data <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factorize_data</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Survived =</span> <span class="fu">factor</span>(</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>          Survived <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Yes"</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>          <span class="st">"No"</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">PClass =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>        Pclass <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"First Class"</span>,</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>          Pclass <span class="sc">==</span> <span class="dv">2</span>,</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Second Class"</span>,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Third Class"</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> Survived,</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> Age <span class="sc">%&gt;%</span> <span class="fu">de_scale</span>()</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tufteboxplot</span>(</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">median.type =</span> <span class="st">"line"</span>,</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">whisker.type =</span> <span class="st">"point"</span>,</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> T</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(</span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vars</span>(</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>      Sex,</span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>      Pclass)</span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(</span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">aesthetics =</span> <span class="fu">c</span>(</span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>      <span class="st">"colour"</span>, </span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>      <span class="st">"fill"</span>),</span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">option =</span> <span class="st">"A"</span>,</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">begin =</span> .<span class="dv">6</span>,</span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">end =</span> <span class="dv">0</span></span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distributions of Survivorship | Age, Sex, Class"</span>,</span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Age"</span>,</span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"On the left side: if the passenger survived. On the left: class (1, 2, 3) and gender."</span></span>
+<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span></span>
+<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>(</span>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">18</span>,</span>
+<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_family =</span> <span class="st">"Atkinson Hyperlegible"</span></span>
+<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="titanic-simple_logit+stepwise_files/figure-html/boxplots-1.png" class="img-fluid" width="960"></p>
@@ -681,19 +680,19 @@ not numeric and were ignored</code></pre>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>fit_full <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  Survived <span class="sc">~</span> ., </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_data_factorized, </span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> na.omit,</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">subset =</span> train_idx</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fit_full <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  Survived <span class="sc">~</span> ., </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_data_factorized, </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> na.omit,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">subset =</span> train_idx</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fit_full <span class="sc">%&gt;%</span> summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>fit_full <span class="sc">%&gt;%</span> summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -702,106 +701,109 @@ glm(formula = Survived ~ ., family = "binomial", data = train_data_factorized,
     subset = train_idx, na.action = na.omit)
 
 Coefficients: (1 not defined because of singularities)
-                       Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)           1.646e+00  1.065e+00   1.545  0.12241    
-PassengerId           2.635e-04  6.618e-04   0.398  0.69053    
-Pclass2              -1.984e-01  1.057e+00  -0.188  0.85103    
-Pclass3              -1.355e+00  1.115e+00  -1.215  0.22432    
-SexMale              -2.684e+00  3.644e-01  -7.364 1.79e-13 ***
-Age                  -6.757e-01  2.254e-01  -2.998  0.00271 ** 
-SibSp                -5.274e-01  2.397e-01  -2.200  0.02779 *  
-Parch                -8.343e-02  1.436e-01  -0.581  0.56125    
-Fare                  1.380e+00  8.075e-01   1.709  0.08752 .  
-CabinA16              1.828e+01  1.075e+04   0.002  0.99864    
-CabinA26              2.095e+01  1.075e+04   0.002  0.99845    
-CabinA31              2.045e+01  1.075e+04   0.002  0.99848    
-CabinA6               2.014e+01  1.075e+04   0.002  0.99851    
-CabinA7              -1.792e+01  1.075e+04  -0.002  0.99867    
-CabinB101             6.713e+00  1.075e+04   0.001  0.99950    
-CabinB18              1.672e+01  7.362e+03   0.002  0.99819    
-CabinB19             -1.744e+01  1.075e+04  -0.002  0.99871    
-CabinB20              1.662e+01  1.075e+04   0.002  0.99877    
-CabinB22             -3.620e-01  2.657e+00  -0.136  0.89165    
-CabinB28              1.667e+01  1.075e+04   0.002  0.99876    
-CabinB35              1.584e+01  1.075e+04   0.001  0.99882    
-CabinB37             -1.788e+01  1.075e+04  -0.002  0.99867    
-CabinB38             -1.809e+01  1.075e+04  -0.002  0.99866    
-CabinB39              1.653e+01  1.075e+04   0.002  0.99877    
-CabinB4               1.805e+01  1.075e+04   0.002  0.99866    
-CabinB42              1.696e+01  1.075e+04   0.002  0.99874    
-CabinB49              1.748e+01  6.329e+03   0.003  0.99780    
-CabinB50              1.998e+01  1.075e+04   0.002  0.99852    
-CabinB51 B53 B55      6.878e+00  1.075e+04   0.001  0.99949    
-CabinB57 B59 B63 B66  1.148e+01  1.075e+04   0.001  0.99915    
-CabinB58 B60         -2.531e+01  1.075e+04  -0.002  0.99812    
-CabinB69              1.733e+01  1.075e+04   0.002  0.99871    
-CabinB77              1.607e+01  1.075e+04   0.001  0.99881    
-CabinB79              1.535e+01  1.075e+04   0.001  0.99886    
-CabinB80              1.540e+01  1.075e+04   0.001  0.99886    
-CabinB82 B84         -1.990e+01  1.075e+04  -0.002  0.99852    
-CabinB96 B98          1.642e+01  5.540e+03   0.003  0.99763    
-CabinC103             1.910e+01  1.075e+04   0.002  0.99858    
-CabinC118            -1.870e+01  1.075e+04  -0.002  0.99861    
-CabinC123            -4.211e-01  2.011e+00  -0.209  0.83413    
-CabinC124            -1.807e+01  1.075e+04  -0.002  0.99866    
-CabinC125             1.458e+01  1.075e+04   0.001  0.99892    
-CabinC126             2.091e+01  1.075e+04   0.002  0.99845    
-CabinC2               1.676e+01  1.075e+04   0.002  0.99876    
-CabinC22 C26         -2.507e+01  7.440e+03  -0.003  0.99731    
-CabinC23 C25 C27     -5.975e+00  3.767e+00  -1.586  0.11265    
-CabinC30             -1.772e+01  1.075e+04  -0.002  0.99869    
-CabinC49             -2.083e+01  1.075e+04  -0.002  0.99845    
-CabinC50              1.699e+01  1.075e+04   0.002  0.99874    
-CabinC52              2.028e+01  1.075e+04   0.002  0.99850    
-CabinC62 C64          1.163e+01  1.075e+04   0.001  0.99914    
-CabinC65             -2.147e+01  1.075e+04  -0.002  0.99841    
-CabinC68             -2.023e+00  2.325e+00  -0.870  0.38432    
-CabinC7               1.413e+01  1.075e+04   0.001  0.99895    
-CabinC78             -1.832e+01  1.075e+04  -0.002  0.99864    
-CabinC82             -2.414e+01  1.075e+04  -0.002  0.99821    
-CabinC83             -1.098e+00  2.200e+00  -0.499  0.61759    
-CabinC86             -1.992e+01  1.075e+04  -0.002  0.99852    
-CabinC87             -1.722e+01  1.075e+04  -0.002  0.99872    
-CabinC91             -2.178e+01  1.075e+04  -0.002  0.99838    
-CabinC92              1.967e+01  1.075e+04   0.002  0.99854    
-CabinC99              1.493e+01  1.075e+04   0.001  0.99889    
-CabinD                1.814e+01  7.419e+03   0.002  0.99805    
-CabinD11              1.763e+01  1.075e+04   0.002  0.99869    
-CabinD30             -1.961e+01  1.075e+04  -0.002  0.99854    
-CabinD33              1.743e+01  1.075e+04   0.002  0.99871    
-CabinD37              1.790e+01  1.075e+04   0.002  0.99867    
-CabinD46             -1.820e+01  1.075e+04  -0.002  0.99865    
-CabinD47              1.747e+01  1.075e+04   0.002  0.99870    
-CabinD48             -2.004e+01  1.075e+04  -0.002  0.99851    
-CabinD6              -1.900e+01  1.075e+04  -0.002  0.99859    
-CabinE12              2.120e+01  1.075e+04   0.002  0.99843    
-CabinE121             1.929e+01  1.075e+04   0.002  0.99857    
-CabinE25              2.062e+01  1.075e+04   0.002  0.99847    
-CabinE31             -1.841e+01  1.075e+04  -0.002  0.99863    
-CabinE33              1.665e+01  1.075e+04   0.002  0.99876    
-CabinE38             -1.714e+01  1.075e+04  -0.002  0.99873    
-CabinE44              1.773e+01  1.075e+04   0.002  0.99868    
-CabinE50              1.951e+01  1.075e+04   0.002  0.99855    
-CabinE58             -1.800e+01  1.075e+04  -0.002  0.99866    
-CabinE63             -1.831e+01  1.075e+04  -0.002  0.99864    
-CabinE68              1.582e+01  1.075e+04   0.001  0.99883    
-CabinF2               1.989e+01  1.075e+04   0.002  0.99852    
-CabinF33              1.801e+01  1.075e+04   0.002  0.99866    
-CabinF4               2.000e+01  1.075e+04   0.002  0.99852    
-CabinG6              -2.078e+01  1.075e+04  -0.002  0.99846    
-CabinT               -1.829e+01  1.075e+04  -0.002  0.99864    
-EmbarkedC             3.232e-01  5.001e-01   0.646  0.51810    
-EmbarkedQ            -5.425e-01  7.251e-01  -0.748  0.45435    
-EmbarkedS                    NA         NA      NA       NA    
+                   Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)       1.357e+00  9.596e-01   1.414 0.157285    
+PassengerId       2.192e-04  6.776e-04   0.323 0.746368    
+Pclass2           1.067e-01  1.018e+00   0.105 0.916480    
+Pclass3          -1.690e+00  1.082e+00  -1.562 0.118172    
+SexMale          -2.856e+00  4.030e-01  -7.085 1.39e-12 ***
+Age              -9.279e-01  2.461e-01  -3.770 0.000163 ***
+SibSp            -7.080e-01  2.868e-01  -2.468 0.013574 *  
+Parch             1.608e-01  1.733e-01   0.928 0.353416    
+Fare              2.795e-01  5.635e-01   0.496 0.619855    
+CabinA16          1.875e+01  1.075e+04   0.002 0.998609    
+CabinA20          2.157e+01  1.075e+04   0.002 0.998400    
+CabinA34          1.839e+01  1.075e+04   0.002 0.998636    
+CabinA5          -1.657e+01  1.075e+04  -0.002 0.998771    
+CabinA6           2.067e+01  1.075e+04   0.002 0.998466    
+CabinB101         1.744e+01  1.075e+04   0.002 0.998706    
+CabinB18          1.582e+01  1.075e+04   0.001 0.998827    
+CabinB20          1.747e+01  1.075e+04   0.002 0.998704    
+CabinB28          1.903e+01  7.346e+03   0.003 0.997933    
+CabinB30         -1.729e+01  1.075e+04  -0.002 0.998717    
+CabinB41          2.195e+01  1.075e+04   0.002 0.998372    
+CabinB42          1.708e+01  1.075e+04   0.002 0.998732    
+CabinB49          1.987e+01  1.075e+04   0.002 0.998526    
+CabinB5           1.629e+01  7.428e+03   0.002 0.998250    
+CabinB51 B53 B55 -1.815e+01  1.075e+04  -0.002 0.998653    
+CabinB58 B60     -2.097e+01  1.075e+04  -0.002 0.998444    
+CabinB71         -1.786e+01  1.075e+04  -0.002 0.998675    
+CabinB73          1.751e+01  1.075e+04   0.002 0.998701    
+CabinB77          1.765e+01  7.603e+03   0.002 0.998148    
+CabinB79          1.666e+01  1.075e+04   0.002 0.998764    
+CabinB80          1.823e+01  1.075e+04   0.002 0.998648    
+CabinB86         -1.983e+01  1.075e+04  -0.002 0.998529    
+CabinB96 B98      1.827e+01  6.576e+03   0.003 0.997783    
+CabinC101         2.049e+01  1.075e+04   0.002 0.998480    
+CabinC103         1.979e+01  1.075e+04   0.002 0.998532    
+CabinC118        -1.895e+01  1.075e+04  -0.002 0.998594    
+CabinC123         7.224e-01  1.991e+00   0.363 0.716705    
+CabinC125         1.839e+01  7.446e+03   0.002 0.998030    
+CabinC126         2.235e+01  1.075e+04   0.002 0.998342    
+CabinC148         1.954e+01  1.075e+04   0.002 0.998550    
+CabinC2           1.787e+01  1.075e+04   0.002 0.998674    
+CabinC22 C26      1.847e+01  1.075e+04   0.002 0.998630    
+CabinC23 C25 C27  1.774e+01  1.075e+04   0.002 0.998684    
+CabinC30         -1.681e+01  1.075e+04  -0.002 0.998753    
+CabinC32          1.686e+01  1.075e+04   0.002 0.998749    
+CabinC46         -1.771e+01  1.075e+04  -0.002 0.998686    
+CabinC49         -2.075e+01  1.075e+04  -0.002 0.998461    
+CabinC52          2.063e+01  1.075e+04   0.002 0.998469    
+CabinC65          1.644e+01  1.075e+04   0.002 0.998780    
+CabinC68          1.757e+01  1.075e+04   0.002 0.998696    
+CabinC7           1.682e+01  1.075e+04   0.002 0.998752    
+CabinC78          1.307e+00  2.559e+00   0.510 0.609712    
+CabinC82         -2.083e+01  1.075e+04  -0.002 0.998454    
+CabinC83          7.904e-01  2.145e+00   0.368 0.712517    
+CabinC85          1.806e+01  1.075e+04   0.002 0.998660    
+CabinC90          1.649e+01  1.075e+04   0.002 0.998777    
+CabinC99          1.765e+01  1.075e+04   0.002 0.998691    
+CabinD           -1.355e-01  1.578e+00  -0.086 0.931559    
+CabinD10 D12      1.914e+01  1.075e+04   0.002 0.998580    
+CabinD11          1.953e+01  1.075e+04   0.002 0.998551    
+CabinD15          1.696e+01  1.075e+04   0.002 0.998742    
+CabinD17          1.900e+01  7.603e+03   0.002 0.998006    
+CabinD19          2.198e+01  1.075e+04   0.002 0.998369    
+CabinD20          1.886e+01  7.601e+03   0.002 0.998020    
+CabinD26         -1.936e+01  1.075e+04  -0.002 0.998564    
+CabinD28          1.665e+01  1.075e+04   0.002 0.998765    
+CabinD30         -1.865e+01  1.075e+04  -0.002 0.998616    
+CabinD33          2.138e+01  1.075e+04   0.002 0.998414    
+CabinD35          2.067e+01  6.640e+03   0.003 0.997516    
+CabinD36          1.733e+01  1.075e+04   0.002 0.998714    
+CabinD46         -1.735e+01  1.075e+04  -0.002 0.998713    
+CabinD56          2.108e+01  1.075e+04   0.002 0.998436    
+CabinE101         1.810e+01  1.075e+04   0.002 0.998657    
+CabinE17          2.201e+01  1.075e+04   0.002 0.998367    
+CabinE24          2.147e+01  1.075e+04   0.002 0.998407    
+CabinE25          2.113e+01  1.075e+04   0.002 0.998432    
+CabinE31         -1.683e+01  1.075e+04  -0.002 0.998752    
+CabinE34          1.756e+01  1.075e+04   0.002 0.998697    
+CabinE46         -1.689e+01  1.075e+04  -0.002 0.998747    
+CabinE49          1.767e+01  1.075e+04   0.002 0.998689    
+CabinE63         -1.736e+01  1.075e+04  -0.002 0.998712    
+CabinE67          9.058e-01  2.219e+00   0.408 0.683155    
+CabinE68          1.641e+01  1.075e+04   0.002 0.998783    
+CabinE8           2.100e+01  1.075e+04   0.002 0.998442    
+CabinF G63       -1.587e+01  1.075e+04  -0.001 0.998823    
+CabinF G73       -1.710e+01  7.558e+03  -0.002 0.998195    
+CabinF2           5.155e-01  1.571e+00   0.328 0.742820    
+CabinF33          1.772e+01  7.578e+03   0.002 0.998134    
+CabinF4           1.987e+01  1.075e+04   0.002 0.998526    
+CabinG6          -2.510e-01  1.579e+00  -0.159 0.873699    
+CabinT           -1.744e+01  1.075e+04  -0.002 0.998706    
+EmbarkedC         8.424e-01  5.335e-01   1.579 0.114351    
+EmbarkedQ        -3.676e-01  8.445e-01  -0.435 0.663322    
+EmbarkedS                NA         NA      NA       NA    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 475.43  on 356  degrees of freedom
-Residual deviance: 228.32  on 268  degrees of freedom
-  (88 observations deleted due to missingness)
-AIC: 406.32
+    Null deviance: 484.57  on 359  degrees of freedom
+Residual deviance: 204.36  on 268  degrees of freedom
+  (85 observations deleted due to missingness)
+AIC: 388.36
 
 Number of Fisher Scoring iterations: 18</code></pre>
 </div>
@@ -809,120 +811,120 @@ Number of Fisher Scoring iterations: 18</code></pre>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>fit_null <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  Survived <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_data_factorized, </span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> na.omit,</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">subset =</span> train_idx</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fit_null <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  Survived <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_data_factorized, </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> na.omit,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">subset =</span> train_idx</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sel_stepwise <span class="ot">&lt;-</span> <span class="fu">step</span>(</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  fit_full,</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">scope =</span> <span class="fu">c</span>(fit_null, fit_full),</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">direction =</span> <span class="st">"both"</span>,</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="fu">log</span>(</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dim</span>(train_data_factorized)[<span class="dv">1</span>]</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>sel_stepwise <span class="ot">&lt;-</span> <span class="fu">step</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  fit_full,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">scope =</span> <span class="fu">c</span>(fit_null, fit_full),</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">direction =</span> <span class="st">"both"</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="fu">log</span>(</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dim</span>(train_data_factorized)[<span class="dv">1</span>]</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Start:  AIC=832.84
+<pre><code>Start:  AIC=829.26
 Survived ~ PassengerId + Pclass + Sex + Age + SibSp + Parch + 
     Fare + Cabin + Embarked
 
               Df Deviance    AIC
-- Cabin       77   307.11 388.62
-- Embarked     2   229.46 820.39
-- PassengerId  1   228.48 826.20
-- Parch        1   228.66 826.38
-- Pclass       2   237.54 828.47
-- Fare         1   231.48 829.20
-- SibSp        1   233.61 831.34
-&lt;none&gt;             228.32 832.84
-- Age          1   238.29 836.01
-- Sex          1   294.11 891.83
+- Cabin       80   276.02 357.53
+- Embarked     2   207.19 818.50
+- PassengerId  1   204.46 822.57
+- Fare         1   204.62 822.73
+- Parch        1   205.22 823.32
+&lt;none&gt;             204.36 829.26
+- SibSp        1   211.47 829.57
+- Pclass       2   222.22 833.53
+- Age          1   220.93 839.03
+- Sex          1   268.10 886.20
 
-Step:  AIC=388.62
+Step:  AIC=357.53
 Survived ~ PassengerId + Pclass + Sex + Age + SibSp + Parch + 
     Fare + Embarked
 
               Df Deviance    AIC
-- Embarked     3   310.30 371.44
-- Fare         1   307.62 382.33
-- Parch        1   307.72 382.44
-- PassengerId  1   307.83 382.55
-- SibSp        1   309.21 383.93
-&lt;none&gt;             307.11 388.62
-- Age          1   319.43 394.15
-- Pclass       2   334.67 402.59
-- Sex          1   397.61 472.32
+- Embarked     3   278.33 339.46
+- Fare         1   276.04 350.76
+- Parch        1   276.37 351.09
+- PassengerId  1   278.03 352.74
+- SibSp        1   279.41 354.12
+&lt;none&gt;             276.02 357.53
+- Age          1   297.71 372.42
+- Pclass       2   322.44 390.36
+- Sex          1   365.99 440.71
 
-Step:  AIC=371.44
+Step:  AIC=339.46
 Survived ~ PassengerId + Pclass + Sex + Age + SibSp + Parch + 
     Fare
 
               Df Deviance    AIC
-- Parch        1   310.94 365.28
-- PassengerId  1   311.11 365.45
-- Fare         1   311.24 365.58
-- SibSp        1   312.78 367.12
-&lt;none&gt;             310.30 371.44
-- Age          1   324.34 378.68
-- Pclass       2   342.13 389.68
-- Sex          1   402.92 457.26
+- Fare         1   278.50 332.83
+- Parch        1   278.78 333.12
+- PassengerId  1   280.57 334.91
+- SibSp        1   282.39 336.73
+&lt;none&gt;             278.33 339.46
+- Age          1   301.09 355.43
+- Pclass       2   327.65 375.20
+- Sex          1   372.47 426.81
 
-Step:  AIC=365.28
-Survived ~ PassengerId + Pclass + Sex + Age + SibSp + Fare
+Step:  AIC=332.83
+Survived ~ PassengerId + Pclass + Sex + Age + SibSp + Parch
 
               Df Deviance    AIC
-- Fare         1   311.60 359.15
-- PassengerId  1   311.64 359.19
-- SibSp        1   314.17 361.71
-&lt;none&gt;             310.94 365.28
-- Age          1   325.24 372.79
-- Pclass       2   345.21 385.96
-- Sex          1   405.29 452.84
+- Parch        1   279.04 326.59
+- PassengerId  1   280.75 328.30
+- SibSp        1   282.50 330.05
+&lt;none&gt;             278.50 332.83
+- Age          1   302.45 350.00
+- Pclass       2   362.37 403.12
+- Sex          1   373.63 421.17
 
-Step:  AIC=359.15
+Step:  AIC=326.59
 Survived ~ PassengerId + Pclass + Sex + Age + SibSp
 
               Df Deviance    AIC
-- PassengerId  1   312.35 353.10
-- SibSp        1   314.55 355.30
-&lt;none&gt;             311.60 359.15
-- Age          1   326.75 367.51
-- Pclass       2   362.33 396.29
-- Sex          1   406.61 447.36
+- PassengerId  1   281.33 322.08
+- SibSp        1   282.53 323.29
+&lt;none&gt;             279.04 326.59
+- Age          1   303.79 344.54
+- Pclass       2   362.77 396.73
+- Sex          1   380.32 421.07
 
-Step:  AIC=353.1
+Step:  AIC=322.08
 Survived ~ Pclass + Sex + Age + SibSp
 
          Df Deviance    AIC
-- SibSp   1   316.00 349.96
-&lt;none&gt;        312.35 353.10
-- Age     1   328.01 361.98
-- Pclass  2   363.10 390.27
-- Sex     1   407.94 441.90
+- SibSp   1   284.53 318.50
+&lt;none&gt;        281.33 322.08
+- Age     1   305.42 339.39
+- Pclass  2   363.67 390.84
+- Sex     1   382.89 416.85
 
-Step:  AIC=349.96
+Step:  AIC=318.5
 Survived ~ Pclass + Sex + Age
 
          Df Deviance    AIC
-&lt;none&gt;        316.00 349.96
-- Age     1   328.73 355.90
-- Pclass  2   365.57 385.95
-- Sex     1   409.72 436.89</code></pre>
+&lt;none&gt;        284.53 318.50
+- Age     1   305.61 332.78
+- Pclass  2   365.59 385.97
+- Sex     1   383.75 410.92</code></pre>
 </div>
 </div>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>sel_stepwise <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sel_stepwise <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -932,20 +934,20 @@ glm(formula = Survived ~ Pclass + Sex + Age, family = "binomial",
 
 Coefficients:
             Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)   2.3408     0.3591   6.519 7.07e-11 ***
-Pclass2      -0.9493     0.3938  -2.411 0.015918 *  
-Pclass3      -2.4921     0.4046  -6.160 7.28e-10 ***
-SexMale      -2.5656     0.2940  -8.728  &lt; 2e-16 ***
-Age          -0.5472     0.1590  -3.442 0.000577 ***
+(Intercept)   3.0529     0.3918   7.793 6.56e-15 ***
+Pclass2      -1.2531     0.4179  -2.998  0.00271 ** 
+Pclass3      -3.2578     0.4312  -7.555 4.20e-14 ***
+SexMale      -2.8352     0.3272  -8.666  &lt; 2e-16 ***
+Age          -0.7366     0.1722  -4.278 1.89e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 475.43  on 356  degrees of freedom
-Residual deviance: 316.00  on 352  degrees of freedom
-  (88 observations deleted due to missingness)
-AIC: 326
+    Null deviance: 484.57  on 359  degrees of freedom
+Residual deviance: 284.53  on 355  degrees of freedom
+  (85 observations deleted due to missingness)
+AIC: 294.53
 
 Number of Fisher Scoring iterations: 5</code></pre>
 </div>
@@ -953,12 +955,12 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>sel_stepwise <span class="ot">&lt;-</span> <span class="fu">update</span>(</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  sel_stepwise,</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> Survived <span class="sc">~</span> Pclass<span class="sc">*</span>Sex<span class="sc">*</span>Age <span class="sc">+</span> SibSp,</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">subset =</span> train_idx</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>sel_stepwise <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sel_stepwise <span class="ot">&lt;-</span> <span class="fu">update</span>(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  sel_stepwise,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> Survived <span class="sc">~</span> Pclass<span class="sc">*</span>Sex<span class="sc">*</span>Age <span class="sc">+</span> SibSp,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">subset =</span> train_idx</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>sel_stepwise <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -968,31 +970,31 @@ glm(formula = Survived ~ Pclass + Sex + Age + SibSp + Pclass:Sex +
     data = train_data_factorized, subset = train_idx, na.action = na.omit)
 
 Coefficients:
-                    Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)           2.6525     0.6296   4.213 2.52e-05 ***
-Pclass2              -0.1397     0.8811  -0.159 0.874033    
-Pclass3              -3.2519     0.7120  -4.567 4.94e-06 ***
-SexMale              -2.8171     0.7478  -3.767 0.000165 ***
-Age                   0.6328     0.6865   0.922 0.356603    
-SibSp                -0.3989     0.1936  -2.060 0.039401 *  
-Pclass2:SexMale      -3.0050     1.2889  -2.331 0.019736 *  
-Pclass3:SexMale       1.2272     0.8811   1.393 0.163696    
-Pclass2:Age          -0.9471     1.0255  -0.924 0.355733    
-Pclass3:Age          -1.1240     0.7578  -1.483 0.137999    
-SexMale:Age          -1.6142     0.7831  -2.061 0.039263 *  
-Pclass2:SexMale:Age  -0.7205     1.3643  -0.528 0.597424    
-Pclass3:SexMale:Age   1.2744     0.9388   1.358 0.174613    
+                    Estimate Std. Error z value Pr(&gt;|z|)   
+(Intercept)           5.3905     2.3957   2.250  0.02444 * 
+Pclass2              -2.6130     2.5261  -1.034  0.30095   
+Pclass3              -6.3500     2.4339  -2.609  0.00908 **
+SexMale              -5.5035     2.4204  -2.274  0.02298 * 
+Age                  -1.5110     1.5687  -0.963  0.33544   
+SibSp                -0.4611     0.2219  -2.078  0.03773 * 
+Pclass2:SexMale       1.2055     2.5848   0.466  0.64095   
+Pclass3:SexMale       3.8423     2.4830   1.547  0.12175   
+Pclass2:Age           0.7543     1.8286   0.413  0.67997   
+Pclass3:Age           0.1086     1.6301   0.067  0.94688   
+SexMale:Age           0.8515     1.5967   0.533  0.59385   
+Pclass2:SexMale:Age  -1.1045     1.9066  -0.579  0.56240   
+Pclass3:SexMale:Age  -0.5026     1.7156  -0.293  0.76954   
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 475.43  on 356  degrees of freedom
-Residual deviance: 278.17  on 344  degrees of freedom
-  (88 observations deleted due to missingness)
-AIC: 304.17
+    Null deviance: 484.57  on 359  degrees of freedom
+Residual deviance: 266.25  on 347  degrees of freedom
+  (85 observations deleted due to missingness)
+AIC: 292.25
 
-Number of Fisher Scoring iterations: 6</code></pre>
+Number of Fisher Scoring iterations: 7</code></pre>
 </div>
 </div>
 </section>
@@ -1001,25 +1003,25 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>convert_to_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(logit) {</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(logit)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(logit))</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>convert_to_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(logit) {</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(logit)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(logit))</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>sel_stepwise <span class="sc">%&gt;%</span> <span class="fu">coef</span>() <span class="sc">%&gt;%</span> <span class="fu">convert_to_prob</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>sel_stepwise <span class="sc">%&gt;%</span> <span class="fu">coef</span>() <span class="sc">%&gt;%</span> <span class="fu">convert_to_prob</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>        (Intercept)             Pclass2             Pclass3             SexMale 
-         0.93416567          0.46513421          0.03725913          0.05640747 
+        0.995461211         0.068305865         0.001743637         0.004056171 
                 Age               SibSp     Pclass2:SexMale     Pclass3:SexMale 
-         0.65312740          0.40158336          0.04720197          0.77331942 
+        0.180789393         0.386733809         0.769502505         0.979006168 
         Pclass2:Age         Pclass3:Age         SexMale:Age Pclass2:SexMale:Age 
-         0.27947195          0.24527644          0.16600427          0.32728009 
+        0.680119508         0.527127162         0.700875361         0.248905194 
 Pclass3:SexMale:Age 
-         0.78150290 </code></pre>
+        0.376919979 </code></pre>
 </div>
 </div>
 </section>
@@ -1030,21 +1032,21 @@ Pclass3:SexMale:Age
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> </span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    sel_stepwise,</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">newdata =</span> train_data_factorized[<span class="sc">-</span>train_idx, ],</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"response"</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">&gt;</span> <span class="fl">0.7293</span>,</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>,</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>pROC<span class="sc">::</span><span class="fu">roc</span>(</span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  train_data_factorized[<span class="sc">-</span>train_idx, ]<span class="sc">$</span>Survived,</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  predictions,</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    sel_stepwise,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">newdata =</span> train_data_factorized[<span class="sc">-</span>train_idx, ],</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"response"</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">&gt;</span> <span class="fl">0.7293</span>,</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>,</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>pROC<span class="sc">::</span><span class="fu">roc</span>(</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  train_data_factorized[<span class="sc">-</span>train_idx, ]<span class="sc">$</span>Survived,</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  predictions,</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Setting levels: control = 0, case = 1</code></pre>
@@ -1057,26 +1059,26 @@ Pclass3:SexMale:Age
 Call:
 roc.default(response = train_data_factorized[-train_idx, ]$Survived,     predictor = predictions)
 
-Data: predictions in 204 controls (train_data_factorized[-train_idx, ]$Survived 0) &lt; 153 cases (train_data_factorized[-train_idx, ]$Survived 1).
-Area under the curve: 0.7475</code></pre>
+Data: predictions in 208 controls (train_data_factorized[-train_idx, ]$Survived 0) &lt; 146 cases (train_data_factorized[-train_idx, ]$Survived 1).
+Area under the curve: 0.741</code></pre>
 </div>
 </div>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>pROC<span class="sc">::</span><span class="fu">ggroc</span>(</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  pROC<span class="sc">::</span><span class="fu">roc</span>(</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  train_data_factorized[<span class="sc">-</span>train_idx, ]<span class="sc">$</span>Survived,</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  predictions,</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">slope =</span> <span class="dv">1</span>,</span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">intercept =</span> <span class="dv">1</span></span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"grey90"</span></span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>pROC<span class="sc">::</span><span class="fu">ggroc</span>(</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  pROC<span class="sc">::</span><span class="fu">roc</span>(</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  train_data_factorized[<span class="sc">-</span>train_idx, ]<span class="sc">$</span>Survived,</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  predictions,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">slope =</span> <span class="dv">1</span>,</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">intercept =</span> <span class="dv">1</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"grey90"</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Setting levels: control = 0, case = 1</code></pre>
@@ -1094,10 +1096,10 @@ Area under the curve: 0.7475</code></pre>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(predictions <span class="sc">==</span> train_data_factorized[<span class="sc">-</span>train_idx, ]<span class="sc">$</span>Survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(predictions <span class="sc">==</span> train_data_factorized[<span class="sc">-</span>train_idx, ]<span class="sc">$</span>Survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7815126</code></pre>
+<pre><code>[1] 0.779661</code></pre>
 </div>
 </div>
 </section>
@@ -1107,31 +1109,31 @@ Area under the curve: 0.7475</code></pre>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>predictions_test <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    sel_stepwise,</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">newdata =</span> test_data_factorized,</span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"response"</span></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">&gt;</span> <span class="fl">0.7293</span>,</span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>,</span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>predictions_test <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    sel_stepwise,</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">newdata =</span> test_data_factorized,</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"response"</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">&gt;</span> <span class="fl">0.7293</span>,</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>,</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>submission <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">PassengerId =</span> test_data <span class="sc">%&gt;%</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(PassengerId),</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Survived =</span> predictions_test</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>submission <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">PassengerId =</span> test_data <span class="sc">%&gt;%</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(PassengerId),</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Survived =</span> predictions_test</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>submission <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>submission <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  PassengerId Survived
@@ -1146,13 +1148,13 @@ Area under the curve: 0.7475</code></pre>
 <div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(submission_flag <span class="sc">==</span> T) {</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    submission,</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/submission.csv"</span>,</span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">row.names =</span> <span class="cn">FALSE</span></span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(submission_flag <span class="sc">==</span> T) {</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    submission,</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/submission.csv"</span>,</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">row.names =</span> <span class="cn">FALSE</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
