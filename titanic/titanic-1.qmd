@@ -492,7 +492,7 @@ mean(predictions == train_data_factorized[-train_idx, ]$Survived, na.rm = TRUE )
 
 ## Creating submission `csv`
 
-```{r }
+```{r use test data prediction}
 predictions_test <- ifelse(
   predict(
     sel_stepwise,
@@ -505,19 +505,18 @@ predictions_test <- ifelse(
 ```
 
 
-```{r}
-submission <- data.frame(
-  PassengerId = test_data %>%
-    select(PassengerId),
-  Survived = predictions_test
-)
+```{r creating new submission dataframe}
+if(submission_flag == T) {
+  submission <- data.frame(
+    PassengerId = test_data %>%
+      select(PassengerId),
+    Survived = predictions_test
+  )
+  submission %>% head
+}
 ```
 
-```{r}
-submission %>% head
-```
-
-```{r}
+```{r write csv for kaggle submission}
 if(submission_flag == T) {
   write.csv(
     submission,
