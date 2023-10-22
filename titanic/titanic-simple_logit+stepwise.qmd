@@ -5,7 +5,7 @@ author: "solar-san"
 date-modified: "`r Sys.Date()`"
 format:
   html:
-    theme: simplex
+    theme: github
     toc: true
     toc-location: left
     fig-align: center
