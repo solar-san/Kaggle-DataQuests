@@ -11,11 +11,11 @@ format:
     fig-align: center
     fig-width: 10
     fig-height: 10
-    html-math-method: katex
+    html-math-method: mathml
     code-overflow: scroll
     code-copy: hover
     code-fold: show
-    highlight-style: arrow
+    highlight-style: breeze
     citations-hover: true
     footnotes-hover: true
     header-includes: |
