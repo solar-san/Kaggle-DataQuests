@@ -28,7 +28,7 @@ mainfont: "Atkinson Hyperlegible"
 monofont: 'Fira Code'
 ---
 
-![](figures/header.png)
+![](figures/header-1.png)
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE
