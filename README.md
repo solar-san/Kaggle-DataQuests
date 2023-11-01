@@ -6,6 +6,10 @@
 
 This is a list of all the submissions:
 
-- `titanic`, part 1: https://solar-san.github.io/Kaggle-DataQuests/titanic-1.html
-  - `R`
-  - Data exploration, data viz, stepwise selection, ROC, logit.  
+- `titanic`:
+  - [Part 1](https://solar-san.github.io/Kaggle-DataQuests/titanic-1.html)
+    - `R`
+    - Data exploration, data viz, stepwise selection, ROC, logit.  
+  - [Part 2](https://solar-san.github.io/Kaggle-DataQuests/titanic-2.html)
+    - `python`
+    - Feature engineering and tree-based classifiers: XGBoost.
