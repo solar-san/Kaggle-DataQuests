@@ -21,6 +21,9 @@ format:
     header-includes: |
       <meta name="author" content="solar-san">
       <meta name="image" property="og:image" content="https://github.com/solar-san/Kaggle-DataQuests/blob/main/docs/figures/header-1.png?raw=true">
+      <meta 
+      name="description"
+      content="Code for the Kaggle Machine Learning from Disaster competition: in this first part, R code is used to classify survivors with the Logistic Regression method, also known as logit; thorough data exploration and descriptive analytics are shown, paired with multi-dimensional data visualization techniques.">
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Code&display=swap" rel="stylesheet">

@@ -99,6 +99,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="titanic-1_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <meta name="author" content="solar-san">
 <meta name="image" property="og:image" content="https://github.com/solar-san/Kaggle-DataQuests/blob/main/docs/figures/header-1.png?raw=true">
+<meta name="description" content="Code for the Kaggle Machine Learning from Disaster competition: in this first part, R code is used to classify survivors with the Logistic Regression method, also known as logit; thorough data exploration and descriptive analytics are shown, paired with multi-dimensional data visualization techniques.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&amp;family=Fira+Code&amp;display=swap" rel="stylesheet">
@@ -700,109 +701,114 @@ Call:
 glm(formula = Survived ~ ., family = "binomial", data = train_data_factorized, 
     subset = train_idx, na.action = na.omit)
 
-Coefficients: (1 not defined because of singularities)
-                       Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)           1.305e+00  1.093e+00   1.194  0.23258    
-PassengerId           4.990e-04  6.374e-04   0.783  0.43373    
-Pclass2              -3.742e-01  1.124e+00  -0.333  0.73932    
-Pclass3              -1.450e+00  1.199e+00  -1.209  0.22648    
-SexMale              -2.550e+00  3.651e-01  -6.984 2.87e-12 ***
-Age                  -6.798e-01  2.076e-01  -3.275  0.00106 ** 
-SibSp                -6.816e-01  2.416e-01  -2.821  0.00479 ** 
-Parch                 1.513e-01  1.618e-01   0.935  0.34972    
-Fare                  1.286e-01  5.747e-01   0.224  0.82289    
-CabinA10             -1.932e+01  1.075e+04  -0.002  0.99857    
-CabinA16              1.846e+01  1.075e+04   0.002  0.99863    
-CabinA20              2.099e+01  1.075e+04   0.002  0.99844    
-CabinA23              2.260e+01  1.075e+04   0.002  0.99832    
-CabinA24             -1.899e+01  1.075e+04  -0.002  0.99859    
-CabinA6               2.046e+01  1.075e+04   0.002  0.99848    
-CabinB18              1.622e+01  1.075e+04   0.002  0.99880    
-CabinB22              1.756e+01  1.075e+04   0.002  0.99870    
-CabinB28              1.898e+01  1.075e+04   0.002  0.99859    
-CabinB3               1.759e+01  1.075e+04   0.002  0.99869    
-CabinB30             -1.794e+01  1.075e+04  -0.002  0.99867    
-CabinB35              1.673e+01  1.075e+04   0.002  0.99876    
-CabinB38             -1.811e+01  1.075e+04  -0.002  0.99866    
-CabinB42              1.707e+01  1.075e+04   0.002  0.99873    
-CabinB49              1.710e+01  1.075e+04   0.002  0.99873    
-CabinB5               1.633e+01  1.075e+04   0.002  0.99879    
-CabinB50              1.963e+01  1.075e+04   0.002  0.99854    
-CabinB51 B53 B55      1.836e+01  1.075e+04   0.002  0.99864    
-CabinB57 B59 B63 B66  1.684e+01  1.075e+04   0.002  0.99875    
-CabinB58 B60         -2.037e+01  1.075e+04  -0.002  0.99849    
-CabinB77              1.775e+01  1.075e+04   0.002  0.99868    
-CabinB80              1.821e+01  1.075e+04   0.002  0.99865    
-CabinB86             -1.976e+01  1.075e+04  -0.002  0.99853    
-CabinB94             -1.814e+01  1.075e+04  -0.002  0.99865    
-CabinB96 B98          2.012e+01  7.284e+03   0.003  0.99780    
-CabinC103             1.934e+01  1.075e+04   0.002  0.99856    
-CabinC104             2.138e+01  1.075e+04   0.002  0.99841    
-CabinC118            -1.928e+01  1.075e+04  -0.002  0.99857    
-CabinC123            -1.774e+01  1.075e+04  -0.002  0.99868    
-CabinC125             1.833e+01  7.474e+03   0.002  0.99804    
-CabinC126             2.163e+01  1.075e+04   0.002  0.99840    
-CabinC2              -1.824e+01  1.075e+04  -0.002  0.99865    
-CabinC22 C26         -2.166e+01  1.075e+04  -0.002  0.99839    
-CabinC23 C25 C27     -1.821e+01  1.075e+04  -0.002  0.99865    
-CabinC30             -1.763e+01  1.075e+04  -0.002  0.99869    
-CabinC32              1.715e+01  1.075e+04   0.002  0.99873    
-CabinC45              1.681e+01  1.075e+04   0.002  0.99875    
-CabinC46             -1.815e+01  1.075e+04  -0.002  0.99865    
-CabinC50              1.775e+01  1.075e+04   0.002  0.99868    
-CabinC52              2.028e+01  1.075e+04   0.002  0.99850    
-CabinC54              1.673e+01  1.075e+04   0.002  0.99876    
-CabinC65             -1.364e+00  2.009e+00  -0.679  0.49737    
-CabinC7               1.719e+01  1.075e+04   0.002  0.99872    
-CabinC78              1.935e+00  1.107e+04   0.000  0.99986    
-CabinC83              6.122e-01  2.095e+00   0.292  0.77014    
-CabinC91             -1.885e+01  1.075e+04  -0.002  0.99860    
-CabinC92              2.098e+01  1.075e+04   0.002  0.99844    
-CabinC93              2.032e+01  6.372e+03   0.003  0.99746    
-CabinD                1.715e+01  1.075e+04   0.002  0.99873    
-CabinD10 D12          1.920e+01  1.075e+04   0.002  0.99858    
-CabinD17              1.853e+01  1.075e+04   0.002  0.99863    
-CabinD20              1.860e+01  7.601e+03   0.002  0.99805    
-CabinD26             -1.780e+01  1.075e+04  -0.002  0.99868    
-CabinD28              1.674e+01  1.075e+04   0.002  0.99876    
-CabinD33              2.087e+01  1.075e+04   0.002  0.99845    
-CabinD35              2.115e+01  1.075e+04   0.002  0.99843    
-CabinD36              1.718e+01  1.075e+04   0.002  0.99873    
-CabinD9               1.717e+01  1.075e+04   0.002  0.99873    
-CabinE10              2.197e+01  1.075e+04   0.002  0.99837    
-CabinE101             1.850e+01  1.075e+04   0.002  0.99863    
-CabinE12              2.120e+01  1.075e+04   0.002  0.99843    
-CabinE121             2.039e+01  1.075e+04   0.002  0.99849    
-CabinE17              2.114e+01  1.075e+04   0.002  0.99843    
-CabinE24              2.047e+01  1.075e+04   0.002  0.99848    
-CabinE33              1.722e+01  1.075e+04   0.002  0.99872    
-CabinE34              1.777e+01  1.075e+04   0.002  0.99868    
-CabinE38             -1.713e+01  1.075e+04  -0.002  0.99873    
-CabinE40              1.738e+01  1.075e+04   0.002  0.99871    
-CabinE46             -1.749e+01  1.075e+04  -0.002  0.99870    
-CabinE50              1.998e+01  1.075e+04   0.002  0.99852    
-CabinE67              1.847e+01  1.075e+04   0.002  0.99863    
-CabinE68              1.667e+01  1.075e+04   0.002  0.99876    
-CabinE8               1.832e+01  1.075e+04   0.002  0.99864    
-CabinF G63           -1.683e+01  1.075e+04  -0.002  0.99875    
-CabinF2               7.996e-01  1.512e+00   0.529  0.59685    
-CabinF4               2.053e+01  1.075e+04   0.002  0.99848    
-CabinG6              -3.115e-01  1.508e+00  -0.207  0.83631    
-CabinT               -1.804e+01  1.075e+04  -0.002  0.99866    
-EmbarkedC             7.273e-01  5.013e-01   1.451  0.14686    
-EmbarkedQ            -1.888e+01  2.642e+03  -0.007  0.99430    
-EmbarkedS                    NA         NA      NA       NA    
+Coefficients:
+                   Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)       2.086e+00  9.874e-01   2.112  0.03466 *  
+PassengerId       6.605e-05  5.876e-04   0.112  0.91050    
+Pclass2          -6.008e-01  1.091e+00  -0.551  0.58169    
+Pclass3          -1.372e+00  1.154e+00  -1.189  0.23452    
+SexMale          -2.182e+00  3.441e-01  -6.342 2.27e-10 ***
+Age              -6.807e-01  2.078e-01  -3.275  0.00106 ** 
+SibSp            -4.599e-01  2.481e-01  -1.854  0.06376 .  
+Parch             4.278e-02  1.537e-01   0.278  0.78078    
+Fare              2.631e-01  5.528e-01   0.476  0.63409    
+CabinA10         -1.845e+01  6.523e+03  -0.003  0.99774    
+CabinA20          1.962e+01  6.523e+03   0.003  0.99760    
+CabinA23          2.122e+01  6.523e+03   0.003  0.99740    
+CabinA26          1.964e+01  6.523e+03   0.003  0.99760    
+CabinA31          1.894e+01  6.523e+03   0.003  0.99768    
+CabinA5          -1.675e+01  6.523e+03  -0.003  0.99795    
+CabinB101         1.612e+01  6.523e+03   0.002  0.99803    
+CabinB18          1.673e+01  6.523e+03   0.003  0.99795    
+CabinB19         -1.679e+01  6.523e+03  -0.003  0.99795    
+CabinB20          1.920e+01  6.523e+03   0.003  0.99765    
+CabinB22          2.113e-01  2.439e+00   0.087  0.93096    
+CabinB3           1.628e+01  6.523e+03   0.002  0.99801    
+CabinB35          1.579e+01  6.523e+03   0.002  0.99807    
+CabinB37         -1.736e+01  6.523e+03  -0.003  0.99788    
+CabinB38         -1.752e+01  6.523e+03  -0.003  0.99786    
+CabinB41          1.996e+01  6.523e+03   0.003  0.99756    
+CabinB42          1.617e+01  6.523e+03   0.002  0.99802    
+CabinB49          1.832e+01  6.523e+03   0.003  0.99776    
+CabinB50          1.854e+01  6.523e+03   0.003  0.99773    
+CabinB51 B53 B55 -1.800e+01  6.523e+03  -0.003  0.99780    
+CabinB58 B60     -2.014e+01  6.523e+03  -0.003  0.99754    
+CabinB69          1.774e+01  6.523e+03   0.003  0.99783    
+CabinB73          1.637e+01  6.523e+03   0.003  0.99800    
+CabinB77          1.642e+01  6.523e+03   0.003  0.99799    
+CabinB82 B84     -1.820e+01  6.523e+03  -0.003  0.99777    
+CabinC101         1.850e+01  6.523e+03   0.003  0.99774    
+CabinC103         1.807e+01  6.523e+03   0.003  0.99779    
+CabinC110        -1.754e+01  6.523e+03  -0.003  0.99785    
+CabinC118        -1.838e+01  6.523e+03  -0.003  0.99775    
+CabinC123        -1.646e-01  1.865e+00  -0.088  0.92969    
+CabinC124        -1.750e+01  6.523e+03  -0.003  0.99786    
+CabinC125         1.651e+01  6.523e+03   0.003  0.99798    
+CabinC126         2.002e+01  6.523e+03   0.003  0.99755    
+CabinC22 C26     -3.244e+00  1.775e+00  -1.828  0.06760 .  
+CabinC23 C25 C27 -1.250e+00  2.582e+00  -0.484  0.62826    
+CabinC32          1.601e+01  6.523e+03   0.002  0.99804    
+CabinC45          1.559e+01  6.523e+03   0.002  0.99809    
+CabinC46         -1.782e+01  6.523e+03  -0.003  0.99782    
+CabinC50          1.713e+01  6.523e+03   0.003  0.99790    
+CabinC52          1.882e+01  6.523e+03   0.003  0.99770    
+CabinC65         -1.924e+01  6.523e+03  -0.003  0.99765    
+CabinC68          1.663e+01  6.523e+03   0.003  0.99797    
+CabinC7           1.594e+01  6.523e+03   0.002  0.99805    
+CabinC83          1.709e+01  6.523e+03   0.003  0.99791    
+CabinC85          1.688e+01  6.523e+03   0.003  0.99793    
+CabinC86         -1.773e+01  6.523e+03  -0.003  0.99783    
+CabinC87         -1.671e+01  6.523e+03  -0.003  0.99796    
+CabinC90          1.588e+01  6.523e+03   0.002  0.99806    
+CabinC92          1.946e+01  6.523e+03   0.003  0.99762    
+CabinC93          1.846e+01  3.926e+03   0.005  0.99625    
+CabinC99          1.640e+01  6.523e+03   0.003  0.99799    
+CabinD            1.723e+01  4.468e+03   0.004  0.99692    
+CabinD11          1.784e+01  6.523e+03   0.003  0.99782    
+CabinD15          1.614e+01  6.523e+03   0.002  0.99803    
+CabinD17          1.755e+01  6.523e+03   0.003  0.99785    
+CabinD20          1.746e+01  6.523e+03   0.003  0.99786    
+CabinD26         -1.894e+01  6.523e+03  -0.003  0.99768    
+CabinD33          1.860e+01  4.011e+03   0.005  0.99630    
+CabinD35          1.873e+01  4.141e+03   0.005  0.99639    
+CabinD36          1.593e+01  6.523e+03   0.002  0.99805    
+CabinD47          1.613e+01  6.523e+03   0.002  0.99803    
+CabinD49          1.806e+01  6.523e+03   0.003  0.99779    
+CabinD56          1.980e+01  6.523e+03   0.003  0.99758    
+CabinD6          -1.831e+01  6.523e+03  -0.003  0.99776    
+CabinD7           1.843e+01  6.523e+03   0.003  0.99775    
+CabinE10          2.048e+01  6.523e+03   0.003  0.99750    
+CabinE101         1.726e+01  6.523e+03   0.003  0.99789    
+CabinE12          1.975e+01  6.523e+03   0.003  0.99758    
+CabinE121         1.796e+01  6.523e+03   0.003  0.99780    
+CabinE24          1.913e+01  6.523e+03   0.003  0.99766    
+CabinE38         -1.658e+01  6.523e+03  -0.003  0.99797    
+CabinE40          1.625e+01  6.523e+03   0.002  0.99801    
+CabinE44          1.740e+01  6.523e+03   0.003  0.99787    
+CabinE50          1.851e+01  6.523e+03   0.003  0.99774    
+CabinE58         -1.743e+01  6.523e+03  -0.003  0.99787    
+CabinE77         -1.847e+01  6.523e+03  -0.003  0.99774    
+CabinE8           1.712e+01  6.523e+03   0.003  0.99791    
+CabinF G63       -1.620e+01  6.523e+03  -0.002  0.99802    
+CabinF G73       -1.713e+01  4.599e+03  -0.004  0.99703    
+CabinF2           1.860e+01  4.612e+03   0.004  0.99678    
+CabinF33          1.760e+01  6.523e+03   0.003  0.99785    
+CabinF4           1.681e+01  6.523e+03   0.003  0.99794    
+CabinG6          -5.382e-01  1.309e+00  -0.411  0.68100    
+CabinT           -1.756e+01  6.523e+03  -0.003  0.99785    
+EmbarkedQ        -7.474e-01  8.317e-01  -0.899  0.36883    
+EmbarkedS        -4.308e-01  4.887e-01  -0.882  0.37803    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 482.90  on 359  degrees of freedom
-Residual deviance: 241.51  on 271  degrees of freedom
+    Null deviance: 494.61  on 359  degrees of freedom
+Residual deviance: 269.57  on 265  degrees of freedom
   (85 observations deleted due to missingness)
-AIC: 419.51
+AIC: 459.57
 
-Number of Fisher Scoring iterations: 18</code></pre>
+Number of Fisher Scoring iterations: 17</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -830,83 +836,92 @@ Number of Fisher Scoring iterations: 18</code></pre>
 <span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Start:  AIC=846.03
+<pre><code>Start:  AIC=914.85
 Survived ~ PassengerId + Pclass + Sex + Age + SibSp + Parch + 
     Fare + Cabin + Embarked
 
               Df Deviance    AIC
-- Cabin       77   318.98 400.49
-- Fare         1   241.56 839.29
-- PassengerId  1   242.13 839.85
-- Parch        1   242.39 840.12
-- Pclass       2   249.84 840.78
-- Embarked     2   252.57 843.50
-&lt;none&gt;             241.51 846.03
-- SibSp        1   250.88 848.61
-- Age          1   253.42 851.15
-- Sex          1   300.15 897.88
+- Cabin       84   355.56 430.28
+- Embarked     2   270.63 902.32
+- Pclass       2   274.17 905.86
+- PassengerId  1   269.59 908.07
+- Parch        1   269.65 908.13
+- Fare         1   269.81 908.29
+- SibSp        1   273.38 911.86
+&lt;none&gt;             269.57 914.85
+- Age          1   281.42 919.90
+- Sex          1   314.49 952.97
 
-Step:  AIC=400.49
+Step:  AIC=430.28
 Survived ~ PassengerId + Pclass + Sex + Age + SibSp + Parch + 
     Fare + Embarked
 
               Df Deviance    AIC
-- Embarked     3   331.91 393.04
-- Fare         1   319.13 393.84
-- Parch        1   319.73 394.45
-- PassengerId  1   322.06 396.78
-&lt;none&gt;             318.98 400.49
-- SibSp        1   326.21 400.93
-- Age          1   330.58 405.30
-- Pclass       2   348.69 416.62
-- Sex          1   393.80 468.52
+- Embarked     2   358.72 419.85
+- Fare         1   355.58 423.50
+- Parch        1   355.85 423.77
+- PassengerId  1   356.12 424.04
+- SibSp        1   356.58 424.50
+&lt;none&gt;             355.56 430.28
+- Age          1   365.88 433.80
+- Pclass       2   374.95 436.08
+- Sex          1   429.70 497.62
 
-Step:  AIC=393.04
+Step:  AIC=419.85
 Survived ~ PassengerId + Pclass + Sex + Age + SibSp + Parch + 
     Fare
 
               Df Deviance    AIC
-- Fare         1   331.92 386.26
-- Parch        1   332.21 386.55
-- PassengerId  1   334.19 388.53
-&lt;none&gt;             331.91 393.04
-- SibSp        1   339.26 393.60
-- Age          1   345.63 399.97
-- Pclass       2   367.63 415.18
-- Sex          1   406.63 460.97
+- Fare         1   358.72 413.06
+- Parch        1   358.99 413.33
+- PassengerId  1   359.41 413.75
+- SibSp        1   360.04 414.38
+&lt;none&gt;             358.72 419.85
+- Age          1   370.00 424.34
+- Pclass       2   381.74 429.28
+- Sex          1   433.47 487.81
 
-Step:  AIC=386.26
+Step:  AIC=413.06
 Survived ~ PassengerId + Pclass + Sex + Age + SibSp + Parch
 
               Df Deviance    AIC
-- Parch        1   332.22 379.76
-- PassengerId  1   334.20 381.74
-&lt;none&gt;             331.92 386.26
-- SibSp        1   339.32 386.86
-- Age          1   345.83 393.37
-- Pclass       2   389.11 429.86
-- Sex          1   406.80 454.35
+- Parch        1   358.99 406.54
+- PassengerId  1   359.42 406.96
+- SibSp        1   360.05 407.59
+&lt;none&gt;             358.72 413.06
+- Age          1   370.43 417.98
+- Pclass       2   396.12 436.87
+- Sex          1   433.66 481.20
 
-Step:  AIC=379.76
+Step:  AIC=406.54
 Survived ~ PassengerId + Pclass + Sex + Age + SibSp
 
               Df Deviance    AIC
-- PassengerId  1   334.62 375.37
-&lt;none&gt;             332.22 379.76
-- SibSp        1   339.44 380.20
-- Age          1   346.31 387.06
-- Pclass       2   389.18 423.14
-- Sex          1   413.46 454.21
+- PassengerId  1   359.69 400.44
+- SibSp        1   360.91 401.66
+&lt;none&gt;             358.99 406.54
+- Age          1   370.53 411.29
+- Pclass       2   397.05 431.01
+- Sex          1   438.86 479.62
 
-Step:  AIC=375.37
+Step:  AIC=400.44
 Survived ~ Pclass + Sex + Age + SibSp
 
          Df Deviance    AIC
-&lt;none&gt;        334.62 375.37
-- SibSp   1   342.37 376.34
-- Age     1   348.22 382.18
-- Pclass  2   390.12 417.29
-- Sex     1   415.42 449.38</code></pre>
+- SibSp   1   361.82 395.78
+&lt;none&gt;        359.69 400.44
+- Age     1   370.96 404.93
+- Pclass  2   397.38 424.55
+- Sex     1   439.12 473.08
+
+Step:  AIC=395.78
+Survived ~ Pclass + Sex + Age
+
+         Df Deviance    AIC
+&lt;none&gt;        361.82 395.78
+- Age     1   371.40 398.57
+- Pclass  2   397.72 418.10
+- Sex     1   440.44 467.61</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -917,28 +932,27 @@ Survived ~ Pclass + Sex + Age + SibSp
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-glm(formula = Survived ~ Pclass + Sex + Age + SibSp, family = "binomial", 
+glm(formula = Survived ~ Pclass + Sex + Age, family = "binomial", 
     data = train_data_factorized, subset = train_idx, na.action = na.omit)
 
 Coefficients:
             Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)   2.7353     0.3893   7.027 2.12e-12 ***
-Pclass2      -1.5000     0.4033  -3.720 0.000200 ***
-Pclass3      -2.6760     0.3992  -6.703 2.04e-11 ***
-SexMale      -2.4211     0.2971  -8.150 3.64e-16 ***
-Age          -0.5800     0.1641  -3.534 0.000409 ***
-SibSp        -0.4838     0.1853  -2.611 0.009022 ** 
+(Intercept)   2.5248     0.3516   7.181 6.92e-13 ***
+Pclass2      -1.2146     0.3860  -3.146  0.00165 ** 
+Pclass3      -2.0826     0.3678  -5.662 1.50e-08 ***
+SexMale      -2.2600     0.2749  -8.222  &lt; 2e-16 ***
+Age          -0.4488     0.1491  -3.011  0.00260 ** 
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 482.90  on 359  degrees of freedom
-Residual deviance: 334.62  on 354  degrees of freedom
+    Null deviance: 494.61  on 359  degrees of freedom
+Residual deviance: 361.82  on 355  degrees of freedom
   (85 observations deleted due to missingness)
-AIC: 346.62
+AIC: 371.82
 
-Number of Fisher Scoring iterations: 5</code></pre>
+Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -959,31 +973,31 @@ glm(formula = Survived ~ Pclass + Sex + Age + SibSp + Pclass:Sex +
     data = train_data_factorized, subset = train_idx, na.action = na.omit)
 
 Coefficients:
-                    Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)           3.6318     1.1210   3.240 0.001196 ** 
-Pclass2              -0.7032     1.3635  -0.516 0.606008    
-Pclass3              -4.3152     1.1725  -3.680 0.000233 ***
-SexMale              -3.7942     1.1831  -3.207 0.001341 ** 
-Age                   0.9644     1.4808   0.651 0.514895    
-SibSp                -0.5388     0.1936  -2.783 0.005386 ** 
-Pclass2:SexMale      -2.2098     1.6025  -1.379 0.167921    
-Pclass3:SexMale       2.4381     1.2699   1.920 0.054873 .  
-Pclass2:Age          -0.5443     1.7408  -0.313 0.754506    
-Pclass3:Age          -1.6485     1.5207  -1.084 0.278342    
-SexMale:Age          -1.1730     1.5105  -0.777 0.437393    
-Pclass2:SexMale:Age  -1.4437     1.8899  -0.764 0.444927    
-Pclass3:SexMale:Age   0.8270     1.5884   0.521 0.602595    
+                    Estimate Std. Error z value Pr(&gt;|z|)   
+(Intercept)           3.6718     1.3982   2.626  0.00864 **
+Pclass2              -1.4106     1.5193  -0.928  0.35315   
+Pclass3              -4.0266     1.4440  -2.788  0.00530 **
+SexMale              -3.7651     1.4438  -2.608  0.00911 **
+Age                   3.2328     1.9588   1.650  0.09886 . 
+SibSp                -0.2533     0.1978  -1.281  0.20029   
+Pclass2:SexMale      -0.3284     1.6383  -0.200  0.84111   
+Pclass3:SexMale       2.6178     1.5071   1.737  0.08239 . 
+Pclass2:Age          -4.2342     2.0610  -2.054  0.03993 * 
+Pclass3:Age          -4.2188     1.9953  -2.114  0.03449 * 
+SexMale:Age          -3.4687     1.9767  -1.755  0.07930 . 
+Pclass2:SexMale:Age   2.9538     2.1536   1.372  0.17019   
+Pclass3:SexMale:Age   4.0590     2.0369   1.993  0.04629 * 
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 482.90  on 359  degrees of freedom
-Residual deviance: 294.35  on 347  degrees of freedom
+    Null deviance: 494.61  on 359  degrees of freedom
+Residual deviance: 327.51  on 347  degrees of freedom
   (85 observations deleted due to missingness)
-AIC: 320.35
+AIC: 353.51
 
-Number of Fisher Scoring iterations: 7</code></pre>
+Number of Fisher Scoring iterations: 8</code></pre>
 </div>
 </div>
 </section>
@@ -1004,13 +1018,13 @@ Number of Fisher Scoring iterations: 7</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>        (Intercept)             Pclass2             Pclass3             SexMale 
-         0.97421376          0.33109257          0.01318728          0.02200489 
+         0.97519916          0.19613281          0.01752312          0.02264064 
                 Age               SibSp     Pclass2:SexMale     Pclass3:SexMale 
-         0.72399268          0.36847084          0.09887658          0.91968929 
+         0.96205156          0.43700521          0.41861943          0.93199604 
         Pclass2:Age         Pclass3:Age         SexMale:Age Pclass2:SexMale:Age 
-         0.36717678          0.16131225          0.23630850          0.19097258 
+         0.01428448          0.01450344          0.03021517          0.95044451 
 Pclass3:SexMale:Age 
-         0.69572742 </code></pre>
+         0.98302701 </code></pre>
 </div>
 </div>
 </section>
@@ -1048,8 +1062,8 @@ Pclass3:SexMale:Age
 Call:
 roc.default(response = train_data_factorized[-train_idx, ]$Survived,     predictor = predictions)
 
-Data: predictions in 206 controls (train_data_factorized[-train_idx, ]$Survived 0) &lt; 148 cases (train_data_factorized[-train_idx, ]$Survived 1).
-Area under the curve: 0.7591</code></pre>
+Data: predictions in 224 controls (train_data_factorized[-train_idx, ]$Survived 0) &lt; 130 cases (train_data_factorized[-train_idx, ]$Survived 1).
+Area under the curve: 0.7488</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1088,7 +1102,7 @@ Area under the curve: 0.7591</code></pre>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(predictions <span class="sc">==</span> train_data_factorized[<span class="sc">-</span>train_idx, ]<span class="sc">$</span>Survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7937853</code></pre>
+<pre><code>[1] 0.8107345</code></pre>
 </div>
 </div>
 </section>
