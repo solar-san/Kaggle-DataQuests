@@ -19,7 +19,7 @@ format:
     citations-hover: true
     footnotes-hover: true
     header-includes: |
-      <meta name="author" content="Marco Solari">
+      <meta name="author" content="solar-san">
       <meta name="image" property="og:image" content="https://github.com/solar-san/Kaggle-DataQuests/blob/main/docs/figures/header-1.png?raw=true">
       <meta 
       name="description"
