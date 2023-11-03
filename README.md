@@ -13,13 +13,17 @@
     - **Description**: This project is a classic introduction to Kaggle competitions. It focuses on predicting passenger survival on the Titanic.
     - **Notebook**:
         - [Part 1](https://solar-san.github.io/Kaggle-DataQuests/titanic-1.html)
-        - `R`
-        - Data exploration, data viz, stepwise selection, ROC, logit.  
-    - [Part 2](https://solar-san.github.io/Kaggle-DataQuests/titanic-2.html)
-        - `python`
-        - Feature engineering and tree-based classifiers: XGBoost.
-2. ###[Airplane Passenger Satisfaction](https://www.kaggle.com/datasets/teejmahal20/airline-passenger-satisfaction)
-    ![Airplane]()
+            - `R`
+            - Data exploration, data viz, stepwise selection, ROC, logit.  
+        - [Part 2](https://solar-san.github.io/Kaggle-DataQuests/titanic-2.html)
+            - `python`
+            - Feature engineering and tree-based classifiers: XGBoost.
+2. ### [Airplane Passenger Satisfaction](https://www.kaggle.com/datasets/teejmahal20/airline-passenger-satisfaction)
+    ![Airplane](https://raw.githubusercontent.com/solar-san/Kaggle-DataQuests/main/docs/figures/Kaggle-airplane_passenger_header.png)
+    - __Description__: This project showcases dimensionality reduction with PCA for multivariate data visualization and clustering methods.
+    - __Notebook__:
+        - [`python`](https://solar-san.github.io/Kaggle-DataQuests/airplane-passenger-satisfaction.html)
+        - PCA, K-Means, `plotly`, `seaborn`
 
 
 
