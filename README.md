@@ -9,15 +9,18 @@
 ## List of Projects
 
 1. ### [Titanic: Machine Learning from Disaster](https://www.kaggle.com/competitions/titanic)
-   ![Titanic](https://raw.githubusercontent.com/solar-san/Kaggle-DataQuests/main/docs/figures/header-0.png)
-   - **Description**: This project is a classic introduction to Kaggle competitions. It focuses on predicting passenger survival on the Titanic.
-   - **Notebook**:
-     - [Part 1](https://solar-san.github.io/Kaggle-DataQuests/titanic-1.html)
-       - `R`
-       - Data exploration, data viz, stepwise selection, ROC, logit.  
-     - [Part 2](https://solar-san.github.io/Kaggle-DataQuests/titanic-2.html)
-       - `python`
-       - Feature engineering and tree-based classifiers: XGBoost.
+    ![Titanic](https://raw.githubusercontent.com/solar-san/Kaggle-DataQuests/main/docs/figures/header-0.png)
+    - **Description**: This project is a classic introduction to Kaggle competitions. It focuses on predicting passenger survival on the Titanic.
+    - **Notebook**:
+        - [Part 1](https://solar-san.github.io/Kaggle-DataQuests/titanic-1.html)
+        - `R`
+        - Data exploration, data viz, stepwise selection, ROC, logit.  
+    - [Part 2](https://solar-san.github.io/Kaggle-DataQuests/titanic-2.html)
+        - `python`
+        - Feature engineering and tree-based classifiers: XGBoost.
+2. ###[Airplane Passenger Satisfaction](https://www.kaggle.com/datasets/teejmahal20/airline-passenger-satisfaction)
+    ![Airplane]()
+
 
 
 ## Notes about Each Project
