@@ -35,4 +35,4 @@
 
 Happy coding, and best of luck with your Kaggle competitions!
 
-[![](https://img.shields.io/badge/GitHub-View_on_GitHub-blue?style=flat&logo=GitHub)](https://github.com/yourusername/kaggle-competitions)
+[![GitHub](https://img.shields.io/badge/GitHub-View_on_GitHub-blue?style=flat&logo=GitHub)](https://github.com/solar-san/Kaggle-DataQuests)
