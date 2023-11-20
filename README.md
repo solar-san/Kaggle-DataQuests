@@ -23,7 +23,7 @@
     - __Description__: This project showcases dimensionality reduction with PCA for multivariate data visualization and clustering methods.
     - __Notebook__:
         - [`python`](https://solar-san.github.io/Kaggle-DataQuests/airplane-passenger-satisfaction.html)
-        - PCA, K-Means, `plotly`, `seaborn`
+        - PCA, K-Means, unsupervised learning, `plotly`.
 
 
 
