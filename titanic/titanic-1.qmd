@@ -19,6 +19,7 @@ format:
     highlight-style: breeze
     citations-hover: true
     footnotes-hover: true
+    cap-location: margin
     header-includes: |
       <meta name="author" content="solar-san">
       <meta name="image" property="og:image" content="https://github.com/solar-san/Kaggle-DataQuests/blob/main/docs/figures/header-1.png?raw=true">
@@ -38,8 +39,6 @@ knitr::opts_chunk$set(
   echo = TRUE
   )
 
-rm(list = ls())
-
 requirements <- c(
   "MASS",
   "tidyverse",
@@ -58,6 +57,15 @@ lapply(
   requirements, 
   library, 
   character.only = TRUE)
+
+tbl_styling <- function(tbl) {
+  kableExtra::kable_styling(
+    tbl,
+    "hover",
+    full_width = FALSE,
+    position = "center"
+  )
+}
 
 theme_set(
   theme_tufte(
@@ -454,7 +462,9 @@ convert_to_prob <- function(logit) {
 
 
 ```{r showing converted coefficients}
-sel_stepwise %>% coef() %>% convert_to_prob()
+sel_stepwise %>% 
+  coef() %>% 
+  convert_to_prob()
 ```
 
 ## Make Predictions and Fine-Tuning
@@ -583,7 +593,11 @@ predict(
   train_data_factorized,
   type = "raw"
 ) %>% 
-  head()
+  head() %>% 
+  kableExtra::kbl(
+    
+  ) %>% 
+  kableExtra::kable_styling()
 ```
 
 ### Creating Submission
@@ -617,6 +631,11 @@ if(submission_flag == TRUE & nb_flag == TRUE) {
 }
 ```
 
+## Submission results
+
+> ___Score___: 0.75598
+
+This result is awful: as expected, the _logistic regression_ is highly interpretable but suffers from high bias and therefore has low prediction capabilities.
 # Quadratic Discriminant Analysis
 
 ## Fitting a QDA Classifier
@@ -640,9 +659,14 @@ qda_CV <- predict(qda_fit, train_data_factorized[-train_idx, ])$class
 ```
 
 ```{r}
-table(
-  qda_CV, train_data_factorized[-train_idx, ]$Survived
-)
+kableExtra::kable(
+  table(
+    "Predicted"= qda_CV, 
+    "Observed"= train_data_factorized[-train_idx, ]$Survived
+    ),
+  caption = "Contingency Table for QDA classifier."
+) %>% 
+ tbl_styling
 ```
 
 ```{r}
