@@ -11,7 +11,8 @@ format:
     fig-align: center
     fig-width: 10
     fig-height: 10
-    html-math-method: mathml
+    html-math-method: katex
+    df-print: kable
     code-overflow: scroll
     code-copy: hover
     code-fold: show
@@ -37,15 +38,21 @@ knitr::opts_chunk$set(
   echo = TRUE
   )
 
+rm(list = ls())
+
 requirements <- c(
   "MASS",
   "tidyverse",
   "glmnet",
+  "e1071",
   "ggthemes",
   "patchwork"
 )
 
-submission_flag = FALSE
+submission_flag <- TRUE
+logit_flag <- FALSE
+nb_flag <- TRUE
+qda_flag <- FALSE
 
 lapply(
   requirements, 
@@ -510,7 +517,7 @@ predictions_test <- ifelse(
 
 
 ```{r creating new submission dataframe}
-if(submission_flag == TRUE) {
+if(submission_flag == TRUE & logit_flag == TRUE) {
   submission <- data.frame(
     PassengerId = test_data %>%
       select(PassengerId),
@@ -521,7 +528,7 @@ if(submission_flag == TRUE) {
 ```
 
 ```{r write csv for kaggle submission}
-if(submission_flag == TRUE) {
+if(submission_flag == TRUE & logit_flag == TRUE) {
   write.csv(
     submission,
     "data/submission.csv",
@@ -535,3 +542,140 @@ if(submission_flag == TRUE) {
 > ___Score___: 0.6244
 
 This result is awful: as expected, the _logistic regression_ is highly interpretable but suffers from high bias and therefore has low prediction capabilities.
+
+# Bayesian Classification: Naïve Bayes
+
+
+## Fitting a Naïve Bayes Classificator
+
+```{r}
+nb_fit <- naiveBayes(
+  Survived ~ Pclass + Sex + Age + SibSp,
+  data = train_data_factorized,
+  subset = train_idx
+)
+```
+
+```{r}
+nb_fit
+```
+
+## Make Predictions and Submission
+
+### Predictions: Cross-Validation Set
+
+```{r}
+naivebayes_CV <- predict(
+  nb_fit,
+  train_data_factorized
+)
+```
+
+```{r}
+mean(naivebayes_CV == train_data_factorized$Survived)
+```
+
+We can also access the _raw posterior probabilities_ as computed by the Naïve Bayes method:
+
+```{r}
+predict(
+  nb_fit,
+  train_data_factorized,
+  type = "raw"
+) %>% 
+  head()
+```
+
+### Creating Submission
+
+```{r}
+naivebayes_test <- predict(
+  nb_fit,
+  test_data_factorized
+)
+```
+
+```{r NB creating new submission dataframe}
+#| tbl-cap: "Naïve Bayes predictions for the test set."
+if(submission_flag == TRUE & nb_flag == TRUE) {
+  submission <- data.frame(
+    PassengerId = test_data %>%
+      select(PassengerId),
+    Survived = naivebayes_test
+  )
+  submission %>% head
+}
+```
+
+```{r NB write csv for kaggle submission}
+if(submission_flag == TRUE & nb_flag == TRUE) {
+  write.csv(
+    submission,
+    "data/submission.csv",
+    row.names = FALSE
+  )
+}
+```
+
+# Quadratic Discriminant Analysis
+
+## Fitting a QDA Classifier
+
+
+```{r}
+qda_fit <- MASS::qda(
+  Survived ~ Pclass + Sex + Age + SibSp,
+  data = train_data_factorized,
+  subset = train_idx
+)
+```
+
+```{r}
+qda_fit
+```
+
+```{r}
+qda_CV <- predict(qda_fit, train_data_factorized[-train_idx, ])$class
+```
+
+```{r}
+table(
+  qda_CV, train_data_factorized[-train_idx, ]$Survived
+)
+```
+
+```{r}
+mean(qda_CV == train_data_factorized[-train_idx, ]$Survived, na.rm = T)
+```
+
+### Creating Submission
+
+```{r}
+#| warning: false
+qda_test <- predict(
+  qda_fit,
+  test_data_factorized
+)$class
+```
+
+```{r QDA creating new submission dataframe}
+#| tbl-cap: "QDA predictions for the test set."
+if(submission_flag == TRUE & qda_flag == TRUE) {
+  qda_submission <- data.frame(
+    PassengerId = test_data %>%
+      select(PassengerId),
+    Survived = qda_test
+  )
+  qda_submission %>% head
+}
+```
+
+```{r QDA write csv for kaggle submission}
+if(submission_flag == TRUE & qda_flag == TRUE) {
+  write.csv(
+    submission,
+    "data/qda_submission.csv",
+    row.names = FALSE
+  )
+}
+```
