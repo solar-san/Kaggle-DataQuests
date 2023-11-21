@@ -50,13 +50,13 @@ submission_flag = FALSE
 lapply(
   requirements, 
   library, 
-  character.only = T)
+  character.only = TRUE)
 
 theme_set(
   theme_tufte(
     base_size = 12,
     base_family = 'Atkinson Hyperlegible',
-    ticks = F
+    ticks = FALSE
     )
   )
 ```
@@ -182,7 +182,7 @@ quantiles_table <- train_data %>%
         .5, 
         .75
         ), 
-      na.rm = T
+      na.rm = TRUE
       ) %>% 
       round(
         .,
@@ -282,7 +282,7 @@ train_data %>%
    geom_hline(
     yintercept = mean(
       train_data$Age,
-      na.rm = T
+      na.rm = TRUE
       ), col="grey99",
     lwd = 1,
     ) +
@@ -354,7 +354,7 @@ train_data %>%
     median.type = "line",
     whisker.type = "point",
     size = 2,
-    na.rm = T
+    na.rm = TRUE
   ) +
   coord_flip() +
   facet_grid(
@@ -487,6 +487,7 @@ pROC::ggroc(
     color = "grey90"
   )
 ```
+
 ### Error Estimation
 
 ```{r estimating error}
@@ -509,7 +510,7 @@ predictions_test <- ifelse(
 
 
 ```{r creating new submission dataframe}
-if(submission_flag == T) {
+if(submission_flag == TRUE) {
   submission <- data.frame(
     PassengerId = test_data %>%
       select(PassengerId),
@@ -520,7 +521,7 @@ if(submission_flag == T) {
 ```
 
 ```{r write csv for kaggle submission}
-if(submission_flag == T) {
+if(submission_flag == TRUE) {
   write.csv(
     submission,
     "data/submission.csv",
