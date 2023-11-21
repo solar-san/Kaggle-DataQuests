@@ -531,7 +531,7 @@ if(submission_flag == TRUE & logit_flag == TRUE) {
 if(submission_flag == TRUE & logit_flag == TRUE) {
   write.csv(
     submission,
-    "data/submission.csv",
+    "data/logit_submission.csv",
     row.names = FALSE
   )
 }
@@ -611,7 +611,7 @@ if(submission_flag == TRUE & nb_flag == TRUE) {
 if(submission_flag == TRUE & nb_flag == TRUE) {
   write.csv(
     submission,
-    "data/submission.csv",
+    "data/nb_submission.csv",
     row.names = FALSE
   )
 }
@@ -635,6 +635,7 @@ qda_fit
 ```
 
 ```{r}
+#| warning: false
 qda_CV <- predict(qda_fit, train_data_factorized[-train_idx, ])$class
 ```
 
