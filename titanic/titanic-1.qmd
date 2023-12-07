@@ -7,7 +7,7 @@ format:
   html:
     theme: github
     toc: true
-    toc-location: left
+    toc-location: right
     fig-align: center
     fig-width: 10
     fig-height: 10
@@ -19,7 +19,7 @@ format:
     highlight-style: breeze
     citations-hover: true
     footnotes-hover: true
-    cap-location: margin
+    cap-location: top
     header-includes: |
       <meta name="author" content="solar-san">
       <meta name="image" property="og:image" content="https://github.com/solar-san/Kaggle-DataQuests/blob/main/docs/figures/header-1.png?raw=true">
@@ -33,7 +33,7 @@ mainfont: "Atkinson Hyperlegible"
 monofont: 'Fira Code'
 ---
 
-![](figures/header-1.png)
+![](https://github.com/solar-san/Kaggle-DataQuests/blob/main/docs/figures/header-1.png?raw=true)
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE
