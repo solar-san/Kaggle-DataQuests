@@ -760,7 +760,7 @@ memory usage: 19.8+ MB</code></pre>
 </div>
 </div>
 <p>Visualizing the resulting data points does not yield immediate insight, they are clustered together and there are not evident patterns or clusters which might facilitate predictions. Reducing the number of points is often useful in such a crowded chart and will be attempted by “<em>downsampling</em>” through a random selection of statistical units.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_reduced_2d <span class="op">=</span> passengers_2d.transform(passengers_train)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(</span>
@@ -770,10 +770,10 @@ memory usage: 19.8+ MB</code></pre>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_13.html" frameborder="0" allowfullscreen=""></iframe>
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_31.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df_reduced_2d <span class="op">=</span> passengers_2d.transform(passengers_train)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(</span>
@@ -783,7 +783,7 @@ memory usage: 19.8+ MB</code></pre>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>fig.show()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_14.html" frameborder="0" allowfullscreen=""></iframe>
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_32.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
 <div class="cell" data-execution_count="15">
@@ -876,7 +876,7 @@ memory usage: 19.8+ MB</code></pre>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit km_4.fit(df_reduced_2d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>98.8 ms ± 39.4 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)</code></pre>
+<pre><code>132 ms ± 16.1 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)</code></pre>
 </div>
 </div>
 <p>Further testing is needed on the whole processing chain. However, there is an important aspect left that needs more study to be understood.</p>
@@ -898,7 +898,7 @@ memory usage: 19.8+ MB</code></pre>
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>fig.show()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/mm/nzts_rm10vzfv61dt475_5xh0000gp/T/ipykernel_2953/952221750.py:5: RuntimeWarning:
+<pre><code>/var/folders/mm/nzts_rm10vzfv61dt475_5xh0000gp/T/ipykernel_3725/952221750.py:5: RuntimeWarning:
 
 invalid value encountered in log
 </code></pre>
