@@ -635,7 +635,6 @@ if(submission_flag == TRUE & nb_flag == TRUE) {
 
 > ___Score___: 0.75598
 
-This result is awful: as expected, the _logistic regression_ is highly interpretable but suffers from high bias and therefore has low prediction capabilities.
 # Quadratic Discriminant Analysis
 
 ## Fitting a QDA Classifier
