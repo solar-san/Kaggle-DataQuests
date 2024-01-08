@@ -672,7 +672,7 @@ kableExtra::kable(
 mean(qda_CV == train_data_factorized[-train_idx, ]$Survived, na.rm = T)
 ```
 
-### Creating Submission
+## Creating Submission
 
 ```{r}
 #| warning: false
